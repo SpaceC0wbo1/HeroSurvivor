@@ -15,7 +15,9 @@ public class BaseEnemy : MonoBehaviour
     public float attackInterval;
     public AudioSource audioSourceRef;
     public AudioClip damageHitSound;
+
     public static event Action<int> OnEnemyDied;
+
     protected string enemyName = "Base Enemy";
 
     protected float nextAttackTime;

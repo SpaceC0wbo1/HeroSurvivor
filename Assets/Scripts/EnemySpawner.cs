@@ -30,7 +30,11 @@ public class EnemySpawner : MonoBehaviour
 
     private GameObject CreateNewEnemyInPool()
     {
-        if (enemyPrefabs.Length == 0) return null;
+        if (enemyPrefabs == null || enemyPrefabs.Length == 0)
+        {
+            Debug.LogError("Не додано жодного префабу ворога в EnemySpawner!");
+            return null;
+        }
 
         int randomTypeEnemyIndex = Random.Range(0, enemyPrefabs.Length);
         GameObject enemy = Instantiate(enemyPrefabs[randomTypeEnemyIndex], poolContainer);
