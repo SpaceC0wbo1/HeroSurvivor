@@ -7,11 +7,11 @@ public class EnemySpawner : MonoBehaviour
     [Header("Prefabs & Points")]
     public GameObject[] enemyPrefabs;
     public Transform[] spawnPoints;
-    public Transform poolContainer; // Контейнер для зберігання ієрархії в сцени (опціонально)
+    public Transform poolContainer;
 
     [Header("Settings")]
-    public float spawnInterval = 5f;  // Пауза між хвилями
-    public float spawnDelay = 0.5f;   // Пауза між ворогами в одній хвилі
+    public float spawnInterval = 5f;
+    public float spawnDelay = 0.5f;
     public int poolSize = 10;
     public int enemiesPerWave = 5;
 
@@ -19,7 +19,6 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        // Заповнюємо початковий пул ворогів
         for (int i = 0; i < poolSize; i++)
         {
             CreateNewEnemyInPool();
@@ -32,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyPrefabs == null || enemyPrefabs.Length == 0)
         {
-            Debug.LogError("Не додано жодного префабу ворога в EnemySpawner!");
+            Debug.LogError("No enemy prefabs have been added to EnemySpawner!");
             return null;
         }
 
@@ -45,7 +44,6 @@ public class EnemySpawner : MonoBehaviour
 
     public GameObject GetPooledEnemy()
     {
-        // Пошук існуючого неактивного ворога
         foreach (GameObject obj in enemyPool)
         {
             if (obj != null && !obj.activeInHierarchy)
@@ -53,8 +51,6 @@ public class EnemySpawner : MonoBehaviour
                 return obj;
             }
         }
-
-        // Якщо всі зайняті — створюємо нового
         return CreateNewEnemyInPool();
     }
 

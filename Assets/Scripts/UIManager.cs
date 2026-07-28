@@ -10,10 +10,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text currentScoreText;
     [SerializeField] private TMP_Text highScoreText;
 
-    void Start()
-    {
-
-    }
     private void OnEnable()
     {
         HeroController.OnHealthChanged += UpdateHealth;

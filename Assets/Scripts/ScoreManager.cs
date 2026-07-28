@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class ScoreManager : MonoBehaviour
 {

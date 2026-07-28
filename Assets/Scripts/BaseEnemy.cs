@@ -1,7 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Audio;
 using System;
 
 public class BaseEnemy : MonoBehaviour
@@ -15,6 +13,7 @@ public class BaseEnemy : MonoBehaviour
     public float attackInterval;
     public AudioSource audioSourceRef;
     public AudioClip damageHitSound;
+    public GameObject hitEffect;
 
     public static event Action<int> OnEnemyDied;
 
@@ -47,14 +46,19 @@ public class BaseEnemy : MonoBehaviour
     private void OnEnable()
     {
         currentHealth = maxHealth;
+        hitEffect.transform.SetParent(transform);
+        hitEffect.transform.localPosition = Vector3.zero;
     }
 
     public virtual void TakeDamage(int damageAmount)
     {
+        hitEffect.SetActive(false);
         if (audioSourceRef != null && damageHitSound != null)
         {
             audioSourceRef.PlayOneShot(damageHitSound);
         }
+
+        hitEffect.SetActive(true);
 
         currentHealth -= damageAmount;
         Debug.Log($"Enemy took {damageAmount} damage. Current HP: {currentHealth}");
@@ -62,7 +66,15 @@ public class BaseEnemy : MonoBehaviour
         if (currentHealth <= 0)
         {
             OnEnemyDied?.Invoke(1);
+
+            if (hitEffect != null)
+            {
+                hitEffect.transform.SetParent(null);
+                hitEffect.SetActive(true);
+            }
+
             gameObject.SetActive(false);
+            
         }
     }
     void Update()

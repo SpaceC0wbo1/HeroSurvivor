@@ -4,7 +4,6 @@ public class BulletLogic : MonoBehaviour
 {
     public float bulletSpeed;
     public int bulletLiveTime;
-    public GameObject hitEffectPrefab;
 
     void OnEnable()
     {
@@ -15,10 +14,6 @@ public class BulletLogic : MonoBehaviour
     {
         if (other.TryGetComponent<BaseEnemy>(out BaseEnemy enemy)) 
         {
-            if (hitEffectPrefab != null) 
-            {
-                Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
-            }
             enemy.TakeDamage(12);
             gameObject.SetActive(false);
             CancelInvoke("Deactivate");

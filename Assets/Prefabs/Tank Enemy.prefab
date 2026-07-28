@@ -165,6 +165,11 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 5164689641652536908, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
   m_PrefabInstance: {fileID: 5363556607824813005}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5005176539551643648 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1088423989447025613, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
+  m_PrefabInstance: {fileID: 5363556607824813005}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7146396901490010174 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2972996218585314291, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
@@ -210,3 +215,4 @@ MonoBehaviour:
   attackInterval: 1.5
   audioSourceRef: {fileID: 991785381803203969}
   damageHitSound: {fileID: 8300000, guid: 5cb25da85dacc7d4dbfd1df135da3ff6, type: 3}
+  hitEffect: {fileID: 5005176539551643648}
