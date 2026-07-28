@@ -25,22 +25,8 @@ public class BaseEnemy : MonoBehaviour
     public virtual void Start()
     {
         Debug.Log($"Enemy type {enemyName} was created and spawned!");
-        heroController = FindAnyObjectByType<HeroController>();
         agent = GetComponent<NavMeshAgent>();
-
         currentHealth = maxHealth;
-
-        GameObject target = GameObject.Find("Hero");
-
-        if (target != null)
-        {
-            playerTransform = target.transform;
-            Debug.Log("Hero was successfully founded!");
-        }
-        else
-        {
-            Debug.LogError("ERROR: An GameObject with name 'Hero' was not found on the scene!");
-        }
     }
 
     private void OnEnable()
@@ -48,6 +34,12 @@ public class BaseEnemy : MonoBehaviour
         currentHealth = maxHealth;
         hitEffect.transform.SetParent(transform);
         hitEffect.transform.localPosition = Vector3.zero;
+    }
+
+    public void Init(HeroController player)
+    {
+        heroController = player;
+        playerTransform = player.transform;
     }
 
     public virtual void TakeDamage(int damageAmount)

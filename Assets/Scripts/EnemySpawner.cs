@@ -16,9 +16,17 @@ public class EnemySpawner : MonoBehaviour
     public int enemiesPerWave = 5;
 
     private List<GameObject> enemyPool = new List<GameObject>();
+    private HeroController cachedPlayer;
 
     void Start()
     {
+        cachedPlayer = FindAnyObjectByType<HeroController>();
+
+        if (cachedPlayer == null) 
+        {
+            Debug.LogError("HeroController not found on GameScene!");
+        }
+
         for (int i = 0; i < poolSize; i++)
         {
             CreateNewEnemyInPool();
@@ -62,6 +70,13 @@ public class EnemySpawner : MonoBehaviour
 
         if (spawnedEnemy != null)
         {
+            BaseEnemy enemyScript = spawnedEnemy.GetComponent<BaseEnemy>();
+
+            if (enemyScript != null && cachedPlayer != null) 
+            { 
+                enemyScript.Init(cachedPlayer); 
+            }
+
             int randomIndex = Random.Range(0, spawnPoints.Length);
             Transform selectedPoint = spawnPoints[randomIndex];
 

@@ -9,6 +9,7 @@ public class HeroController : MonoBehaviour
     public int damage;
     public int maxHeroHealth;
     public float rotationSpeed = 5f;
+
     public static event Action<int, int> OnHealthChanged;
     public static event Action OnHeroDied;
 
