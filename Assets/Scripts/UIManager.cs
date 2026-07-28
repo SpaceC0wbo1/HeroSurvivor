@@ -7,8 +7,6 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public Slider healthSlider;
 
-    private int score = 0;
-
     [SerializeField] private TMP_Text currentScoreText;
     [SerializeField] private TMP_Text highScoreText;
 

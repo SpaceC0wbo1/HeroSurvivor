@@ -5,14 +5,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public GameObject gameOverPanel;
-
     public Button gameOverBtnRestart;
-
     public int scoreToWin = 10;
 
-    private bool isGameActive = true;
-    
-    
+       
     void Start()
     {
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
@@ -33,21 +29,21 @@ public class GameManager : MonoBehaviour
         HeroController.OnHeroDied -= GameOver;
     }
 
-    void Update()
-    {
-      
-    }
-
     public void GameOver()
     {
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
-        isGameActive = false;
     }
 
     public void RestartGame()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 }
