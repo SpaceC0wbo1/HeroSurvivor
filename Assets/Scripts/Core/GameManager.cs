@@ -1,4 +1,4 @@
-namespace HeroSurvivor.UI
+namespace HeroSurvivor.Core
 {
     using UnityEngine;
     using UnityEngine.SceneManagement;
@@ -9,7 +9,6 @@ namespace HeroSurvivor.UI
     {
         public GameObject gameOverPanel;
         public Button gameOverBtnRestart;
-        public int scoreToWin = 10;
 
 
         void Start()

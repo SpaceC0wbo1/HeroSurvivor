@@ -11,9 +11,10 @@ namespace HeroSurvivor.Gameplay.Enemies
         protected NavMeshAgent agent;
         protected HeroController heroController;
 
-        public int maxHealth;
-        public int attackEnemyDamage;
-        public float attackInterval;
+        [SerializeField] private int maxHealth;
+        [SerializeField] private int attackEnemyDamage;
+        [SerializeField] private float attackInterval;
+
         public AudioSource audioSourceRef;
         public AudioClip damageHitSound;
         public GameObject hitEffect;

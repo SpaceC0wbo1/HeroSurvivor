@@ -1,9 +1,9 @@
-namespace HeroSurvivor.Gameplay.Weapons
+namespace HeroSurvivor.Gameplay.Weapons.Projectiles
 {
     using HeroSurvivor.Gameplay.Enemies;
     using UnityEngine;
 
-    public class BulletLogic : MonoBehaviour
+    public class Bullet : MonoBehaviour
     {
         public float bulletSpeed;
         public int bulletLiveTime;

@@ -8,20 +8,30 @@ namespace HeroSurvivor.Gameplay.Enemies
     public class EnemySpawner : MonoBehaviour
     {
         [Header("Prefabs & Points")]
-        public GameObject[] enemyPrefabs;
+        public BaseEnemy[] enemyPrefabs;
         public Transform[] spawnPoints;
         public Transform poolContainer;
 
         [Header("Settings")]
-        public float spawnInterval = 5f;
-        public float spawnDelay = 0.5f;
-        public int poolSize = 10;
-        public int enemiesPerWave = 5;
+        [SerializeField] private float spawnInterval = 5f;
+        [SerializeField] private float spawnDelay = 0.5f;
+        [SerializeField] private int poolSize = 10;
+        [SerializeField] private int enemiesPerWave = 5;
 
-        private List<GameObject> enemyPool = new List<GameObject>();
+
+        private Queue<BaseEnemy> enemyPool = new Queue<BaseEnemy>();
         private HeroController cachedPlayer;
 
-        void Start()
+        private WaitForSeconds cachedSpawnDelay;
+        private WaitForSeconds cachedSpawnInterval;
+
+        private void Awake()
+        {
+            cachedSpawnDelay = new WaitForSeconds(spawnDelay);
+            cachedSpawnInterval = new WaitForSeconds(spawnInterval);
+        }
+
+        private void Start()
         {
             cachedPlayer = FindAnyObjectByType<HeroController>();
 
@@ -38,7 +48,7 @@ namespace HeroSurvivor.Gameplay.Enemies
             StartCoroutine(SpawnWaveRoutine());
         }
 
-        private GameObject CreateNewEnemyInPool()
+        private BaseEnemy CreateNewEnemyInPool()
         {
             if (enemyPrefabs == null || enemyPrefabs.Length == 0)
             {
@@ -47,35 +57,42 @@ namespace HeroSurvivor.Gameplay.Enemies
             }
 
             int randomTypeEnemyIndex = Random.Range(0, enemyPrefabs.Length);
-            GameObject enemy = Instantiate(enemyPrefabs[randomTypeEnemyIndex], poolContainer);
-            enemy.SetActive(false);
-            enemyPool.Add(enemy);
+            BaseEnemy enemy = Instantiate(enemyPrefabs[randomTypeEnemyIndex], poolContainer);
+            enemy.gameObject.SetActive(false);
+            enemyPool.Enqueue(enemy);
             return enemy;
         }
 
-        public GameObject GetPooledEnemy()
+        public BaseEnemy GetPooledEnemy()
         {
-            foreach (GameObject obj in enemyPool)
+            if (enemyPool.Count > 0)
             {
-                if (obj != null && !obj.activeInHierarchy)
+                BaseEnemy enemy = enemyPool.Dequeue();
+
+                if (enemy != null && !enemy.gameObject.activeInHierarchy)
                 {
-                    return obj;
+                    return enemy;
                 }
             }
+
             return CreateNewEnemyInPool();
         }
 
-        void SpawnEnemy()
+        public void ReturnToPool(BaseEnemy enemy)
+        {
+            enemy.gameObject.SetActive(false);
+            enemyPool.Enqueue(enemy);
+        }
+
+        private void SpawnEnemy()
         {
             if (spawnPoints.Length == 0) return;
 
-            GameObject spawnedEnemy = GetPooledEnemy();
+            BaseEnemy enemyScript = GetPooledEnemy();
 
-            if (spawnedEnemy != null)
+            if (enemyScript != null)
             {
-                BaseEnemy enemyScript = spawnedEnemy.GetComponent<BaseEnemy>();
-
-                if (enemyScript != null && cachedPlayer != null)
+                if (cachedPlayer != null)
                 {
                     enemyScript.Init(cachedPlayer);
                 }
@@ -83,9 +100,9 @@ namespace HeroSurvivor.Gameplay.Enemies
                 int randomIndex = Random.Range(0, spawnPoints.Length);
                 Transform selectedPoint = spawnPoints[randomIndex];
 
-                spawnedEnemy.transform.position = selectedPoint.position;
-                spawnedEnemy.transform.rotation = selectedPoint.rotation;
-                spawnedEnemy.SetActive(true);
+                enemyScript.transform.position = selectedPoint.position;
+                enemyScript.transform.rotation = selectedPoint.rotation;
+                enemyScript.gameObject.SetActive(true);
             }
         }
 
@@ -100,10 +117,10 @@ namespace HeroSurvivor.Gameplay.Enemies
                 for (int i = 0; i < enemiesPerWave; i++)
                 {
                     SpawnEnemy();
-                    yield return new WaitForSeconds(spawnDelay);
+                    yield return cachedSpawnDelay; // Перевикористовуємо кешований затримач
                 }
 
-                yield return new WaitForSeconds(spawnInterval);
+                yield return cachedSpawnInterval; // Перевикористовуємо кешований затримач
 
                 enemiesPerWave += 1;
                 currentWave++;

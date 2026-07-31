@@ -1,4 +1,4 @@
-namespace HeroSurvivor.Gameplay.Enemies
+namespace HeroSurvivor.Gameplay.Enemies.Types
 {
     using UnityEngine;
 

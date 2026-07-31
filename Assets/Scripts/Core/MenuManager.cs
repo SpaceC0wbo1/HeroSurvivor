@@ -1,10 +1,10 @@
-namespace HeroSurvivor.UI
+namespace HeroSurvivor.Core
 {
     using UnityEngine;
     using UnityEngine.SceneManagement;
     using TMPro;
 
-    public class MainMenuManager : MonoBehaviour
+    public class MenuManager : MonoBehaviour
     {
         [SerializeField] private TMP_Text highScoreText;
         [SerializeField] private string gameSceneName = "MainScene";

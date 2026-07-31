@@ -6,8 +6,9 @@ namespace HeroSurvivor.Gameplay.Weapons
     public class BulletPoolManager : MonoBehaviour
     {
         public GameObject bulletPrefab;
-        public int poolSize = 30;
         public Transform spawnBulletTarget;
+
+        [SerializeField] private int poolSize = 30;
 
         private List<GameObject> pooledObjects = new List<GameObject>();
 
