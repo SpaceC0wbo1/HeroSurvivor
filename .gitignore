@@ -88,10 +88,6 @@ playground.xcworkspace
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
-# Explicitly allow Unity's root Packages directory
-!/Packages/
-!/Packages/**
-
 # Build output
 *.apk
 *.aab
@@ -162,3 +158,7 @@ x86/
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Explicitly allow Unity's root Packages directory
+!/Packages/
+!/Packages/**
