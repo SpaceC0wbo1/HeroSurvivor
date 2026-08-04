@@ -7,10 +7,9 @@ namespace HeroSurvivor.Gameplay.Player
 
     public class HeroController : MonoBehaviour
     {
-        public string heroName;
-        public float speed;
-        public int damage;
-        public int maxHeroHealth;
+        [SerializeField] private CharacterConfig characterConfig;
+        private float _heroSpeed;
+
         public float rotationSpeed = 5f;
 
         public static event Action<int, int> OnHealthChanged;
@@ -29,9 +28,10 @@ namespace HeroSurvivor.Gameplay.Player
 
         void Start()
         {
-            currentHeroHealth = maxHeroHealth;
+            currentHeroHealth = characterConfig.maxHeroHealth;
             rb = GetComponent<Rigidbody>();
-            OnHealthChanged?.Invoke(currentHeroHealth, maxHeroHealth);
+            OnHealthChanged?.Invoke(currentHeroHealth, characterConfig.maxHeroHealth);
+            _heroSpeed = characterConfig.speed;
         }
 
         void Update()
@@ -88,7 +88,7 @@ namespace HeroSurvivor.Gameplay.Player
         {
             if (movementInput.magnitude > 0f)
             {
-                Vector3 targetPosition = rb.position + movementInput * speed * Time.fixedDeltaTime;
+                Vector3 targetPosition = rb.position + movementInput * characterConfig.speed * Time.fixedDeltaTime;
                 rb.MovePosition(targetPosition);
             }
         }
@@ -97,14 +97,14 @@ namespace HeroSurvivor.Gameplay.Player
         {
             if (other.CompareTag("Trap"))
             {
-                speed = 0f;
+                _heroSpeed = 0f;
 
                 if (!isStuck)
                 {
                     currentHeroHealth = 0;
-                    Debug.Log($"Oh, no!!! {heroName} is stuck(999(99");
+                    Debug.Log($"Oh, no!!! {characterConfig.heroName} is stuck(999(99");
                     isStuck = true;
-                    OnHealthChanged?.Invoke(currentHeroHealth, maxHeroHealth);
+                    OnHealthChanged?.Invoke(currentHeroHealth, characterConfig.maxHeroHealth);
                     OnHeroDied?.Invoke();
                 }
             }
@@ -113,12 +113,12 @@ namespace HeroSurvivor.Gameplay.Player
         public void TakeDamage(int amount)
         {
             currentHeroHealth -= amount;
-            OnHealthChanged?.Invoke(currentHeroHealth, maxHeroHealth);
+            OnHealthChanged?.Invoke(currentHeroHealth, characterConfig.maxHeroHealth);
 
 
             if (currentHeroHealth <= 0)
             {
-                speed = 0f;
+                _heroSpeed = 0f;
                 Debug.Log("Hero is dead((9");
                 isStuck = true;
                 OnHeroDied?.Invoke();
