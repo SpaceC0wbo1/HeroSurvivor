@@ -8,7 +8,7 @@ namespace HeroSurvivor.Gameplay.Enemies
     public class EnemySpawner : MonoBehaviour
     {
         [Header("Prefabs & Points")]
-        public BaseEnemy[] enemyPrefabs;
+        public Enemy[] enemyPrefabs;
         public Transform[] spawnPoints;
         public Transform poolContainer;
 
@@ -18,8 +18,7 @@ namespace HeroSurvivor.Gameplay.Enemies
         [SerializeField] private int poolSize = 10;
         [SerializeField] private int enemiesPerWave = 5;
 
-
-        private Queue<BaseEnemy> enemyPool = new Queue<BaseEnemy>();
+        private Queue<Enemy> enemyPool = new Queue<Enemy>();
         private HeroController cachedPlayer;
 
         private WaitForSeconds cachedSpawnDelay;
@@ -40,15 +39,24 @@ namespace HeroSurvivor.Gameplay.Enemies
                 Debug.LogError("HeroController not found on GameScene!");
             }
 
+            if (spawnPoints == null || spawnPoints.Length == 0)
+            {
+                Debug.LogError("SpawnPoints array is empty! Assign spawn points in the Inspector.");
+            }
+
             for (int i = 0; i < poolSize; i++)
             {
-                CreateNewEnemyInPool();
+                Enemy enemy = InstantiateNewEnemy();
+                if (enemy != null)
+                {
+                    enemyPool.Enqueue(enemy);
+                }
             }
 
             StartCoroutine(SpawnWaveRoutine());
         }
 
-        private BaseEnemy CreateNewEnemyInPool()
+        private Enemy InstantiateNewEnemy()
         {
             if (enemyPrefabs == null || enemyPrefabs.Length == 0)
             {
@@ -57,28 +65,27 @@ namespace HeroSurvivor.Gameplay.Enemies
             }
 
             int randomTypeEnemyIndex = Random.Range(0, enemyPrefabs.Length);
-            BaseEnemy enemy = Instantiate(enemyPrefabs[randomTypeEnemyIndex], poolContainer);
+            Enemy enemy = Instantiate(enemyPrefabs[randomTypeEnemyIndex], poolContainer);
             enemy.gameObject.SetActive(false);
-            enemyPool.Enqueue(enemy);
             return enemy;
         }
 
-        public BaseEnemy GetPooledEnemy()
+        public Enemy GetPooledEnemy()
         {
-            if (enemyPool.Count > 0)
+            // Перевіряємо наявні об'єкти в пулі
+            while (enemyPool.Count > 0)
             {
-                BaseEnemy enemy = enemyPool.Dequeue();
+                Enemy enemy = enemyPool.Dequeue();
 
                 if (enemy != null && !enemy.gameObject.activeInHierarchy)
                 {
                     return enemy;
                 }
             }
-
-            return CreateNewEnemyInPool();
+            return InstantiateNewEnemy();
         }
 
-        public void ReturnToPool(BaseEnemy enemy)
+        public void ReturnToPool(Enemy enemy)
         {
             enemy.gameObject.SetActive(false);
             enemyPool.Enqueue(enemy);
@@ -86,9 +93,9 @@ namespace HeroSurvivor.Gameplay.Enemies
 
         private void SpawnEnemy()
         {
-            if (spawnPoints.Length == 0) return;
+            if (spawnPoints == null || spawnPoints.Length == 0) return;
 
-            BaseEnemy enemyScript = GetPooledEnemy();
+            Enemy enemyScript = GetPooledEnemy();
 
             if (enemyScript != null)
             {
@@ -117,10 +124,10 @@ namespace HeroSurvivor.Gameplay.Enemies
                 for (int i = 0; i < enemiesPerWave; i++)
                 {
                     SpawnEnemy();
-                    yield return cachedSpawnDelay; // Перевикористовуємо кешований затримач
+                    yield return cachedSpawnDelay;
                 }
 
-                yield return cachedSpawnInterval; // Перевикористовуємо кешований затримач
+                yield return cachedSpawnInterval;
 
                 enemiesPerWave += 1;
                 currentWave++;

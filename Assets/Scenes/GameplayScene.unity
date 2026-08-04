@@ -933,7 +933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverPanel: {fileID: 551356309}
   gameOverBtnRestart: {fileID: 1068067254}
-  scoreToWin: 10
+  gameSceneName: {fileID: 102900000, guid: 2466e14a34425bd4ba9db07c73400d4b, type: 3}
 --- !u!4 &438579500
 Transform:
   m_ObjectHideFlags: 0
@@ -1344,9 +1344,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 2972996218585314291, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
-  - {fileID: 7852019368586460059, guid: bfe1773a564f1414ca77f937afabdcc1, type: 3}
-  - {fileID: 7146396901490010174, guid: 11cf207192aa58d4c9e65a1b4f21def1, type: 3}
+  - {fileID: 3993232825669268118, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
+  - {fileID: 8277367993675840254, guid: bfe1773a564f1414ca77f937afabdcc1, type: 3}
+  - {fileID: 9008886216047389019, guid: 11cf207192aa58d4c9e65a1b4f21def1, type: 3}
   spawnPoints:
   - {fileID: 211040348}
   - {fileID: 2020739305}
@@ -2325,8 +2325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6139481916780722794, guid: 595c591a2f4d5fe41af9ed702aaacf4f, type: 3}
-  poolSize: 30
   spawnBulletTarget: {fileID: 1280090805}
+  poolSize: 30
 --- !u!4 &1280090805
 Transform:
   m_ObjectHideFlags: 0

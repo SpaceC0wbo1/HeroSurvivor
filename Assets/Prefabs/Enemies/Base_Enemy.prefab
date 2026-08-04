@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 4725350754670060214}
   - component: {fileID: 5350883263611784306}
   - component: {fileID: 5164689641652536908}
-  - component: {fileID: 1901858461829794463}
   - component: {fileID: 569491308110829299}
+  - component: {fileID: 3993232825669268118}
   m_Layer: 0
   m_Name: Base_Enemy
   m_TagString: Untagged
@@ -188,24 +188,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1901858461829794463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2972996218585314291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c10a95e7a3941c142bafcff32f017b81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 24
-  attackEnemyDamage: 10
-  attackInterval: 1.5
-  audioSourceRef: {fileID: 5164689641652536908}
-  damageHitSound: {fileID: 8300000, guid: b4b1997ff306c164ab3d828d9f490605, type: 3}
-  hitEffect: {fileID: 1088423989447025613}
 --- !u!65 &569491308110829299
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -227,6 +209,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3993232825669268118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2972996218585314291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10a95e7a3941c142bafcff32f017b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 05ebdedeb4ee52a48b7dc094dc45c31f, type: 2}
+  audioSourceRef: {fileID: 5164689641652536908}
+  damageHitSound: {fileID: 8300000, guid: b4b1997ff306c164ab3d828d9f490605, type: 3}
+  hitEffect: {fileID: 1088423989447025613}
 --- !u!1 &6987112358446872488
 GameObject:
   m_ObjectHideFlags: 0

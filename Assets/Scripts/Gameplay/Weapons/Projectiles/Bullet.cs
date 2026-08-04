@@ -15,7 +15,7 @@ namespace HeroSurvivor.Gameplay.Weapons.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<BaseEnemy>(out BaseEnemy enemy))
+            if (other.TryGetComponent<Enemy>(out Enemy enemy))
             {
                 enemy.TakeDamage(12);
                 gameObject.SetActive(false);

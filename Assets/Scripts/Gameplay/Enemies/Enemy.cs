@@ -5,37 +5,32 @@ namespace HeroSurvivor.Gameplay.Enemies
     using System;
     using HeroSurvivor.Gameplay.Player;
 
-    public class BaseEnemy : MonoBehaviour
+    public class Enemy : MonoBehaviour
     {
         protected Transform playerTransform;
         protected NavMeshAgent agent;
         protected HeroController heroController;
 
-        [SerializeField] private int maxHealth;
-        [SerializeField] private int attackEnemyDamage;
-        [SerializeField] private float attackInterval;
+        [SerializeField] private EnemyConfig config;
 
         public AudioSource audioSourceRef;
         public AudioClip damageHitSound;
         public GameObject hitEffect;
 
         public static event Action<int> OnEnemyDied;
-
-        protected string enemyName = "Base Enemy";
-
         protected float nextAttackTime;
         protected int currentHealth;
 
         public virtual void Start()
         {
-            Debug.Log($"Enemy type {enemyName} was created and spawned!");
             agent = GetComponent<NavMeshAgent>();
-            currentHealth = maxHealth;
+            currentHealth = config.maxHealth;
+            agent.speed = config.enemyMovSpeed;
         }
 
         private void OnEnable()
         {
-            currentHealth = maxHealth;
+            currentHealth = config.maxHealth;
             hitEffect.transform.SetParent(transform);
             hitEffect.transform.localPosition = Vector3.zero;
         }
@@ -86,9 +81,9 @@ namespace HeroSurvivor.Gameplay.Enemies
 
             if (distance <= 1.5f && Time.time >= nextAttackTime)
             {
-                heroController.TakeDamage(attackEnemyDamage);
+                heroController.TakeDamage(config.attackEnemyDamage);
 
-                nextAttackTime = Time.time + attackInterval;
+                nextAttackTime = Time.time + config.attackInterval;
             }
         }
     }

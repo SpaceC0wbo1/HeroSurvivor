@@ -3,11 +3,13 @@ namespace HeroSurvivor.Core
     using UnityEngine;
     using UnityEngine.SceneManagement;
     using TMPro;
+    using UnityEditor.SearchService;
+    using UnityEditor;
 
     public class MenuManager : MonoBehaviour
     {
         [SerializeField] private TMP_Text highScoreText;
-        [SerializeField] private string gameSceneName = "MainScene";
+        [SerializeField] private SceneAsset gameSceneName;
 
         public GameObject howToPlayPanel;
 
@@ -21,7 +23,7 @@ namespace HeroSurvivor.Core
 
         public void PlayGame()
         {
-            SceneManager.LoadScene(gameSceneName);
+            SceneManager.LoadScene(gameSceneName.name);
         }
 
         public void QuitGame()

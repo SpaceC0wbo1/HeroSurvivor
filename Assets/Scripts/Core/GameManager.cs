@@ -1,14 +1,16 @@
 namespace HeroSurvivor.Core
 {
+    using HeroSurvivor.Gameplay.Player;
+    using UnityEditor;
     using UnityEngine;
     using UnityEngine.SceneManagement;
     using UnityEngine.UI;
-    using HeroSurvivor.Gameplay.Player;
 
     public class GameManager : MonoBehaviour
     {
         public GameObject gameOverPanel;
         public Button gameOverBtnRestart;
+        [SerializeField] private SceneAsset gameSceneName;
 
 
         void Start()
@@ -46,7 +48,7 @@ namespace HeroSurvivor.Core
         public void ReturnToMainMenu()
         {
             Time.timeScale = 1f;
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene(gameSceneName.name);
         }
     }
 }

@@ -98,6 +98,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tank Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3993232825669268118, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
+      propertyPath: config
+      value: 
+      objectReference: {fileID: 11400000, guid: 09f8d03469f76ef498fe63b44986ffd7, type: 2}
     - target: {fileID: 4725350754670060214, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -151,23 +155,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2972996218585314291, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8769446510360064138}
-    - targetCorrespondingSourceObject: {fileID: 2972996218585314291, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4363100269300330487}
   m_SourcePrefab: {fileID: 100100000, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
 --- !u!4 &863845779924810107 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4725350754670060214, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
-  m_PrefabInstance: {fileID: 5363556607824813005}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &991785381803203969 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5164689641652536908, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
-  m_PrefabInstance: {fileID: 5363556607824813005}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5005176539551643648 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1088423989447025613, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
   m_PrefabInstance: {fileID: 5363556607824813005}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7146396901490010174 stripped
@@ -198,21 +189,3 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4363100269300330487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7146396901490010174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af3931e9b84be3743970e0b9a395207d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 24
-  attackEnemyDamage: 10
-  attackInterval: 1.5
-  audioSourceRef: {fileID: 991785381803203969}
-  damageHitSound: {fileID: 8300000, guid: 5cb25da85dacc7d4dbfd1df135da3ff6, type: 3}
-  hitEffect: {fileID: 5005176539551643648}
