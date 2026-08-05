@@ -13,7 +13,6 @@ namespace HeroSurvivor.Gameplay.Enemies
 
         [SerializeField] private EnemyConfig config;
 
-        public AudioSource audioSourceRef;
         public AudioClip damageHitSound;
         public GameObject hitEffect;
 
@@ -44,9 +43,9 @@ namespace HeroSurvivor.Gameplay.Enemies
         public virtual void TakeDamage(int damageAmount)
         {
             hitEffect.SetActive(false);
-            if (audioSourceRef != null && damageHitSound != null)
+            if (damageHitSound != null)
             {
-                audioSourceRef.PlayOneShot(damageHitSound);
+                AudioSource.PlayClipAtPoint(damageHitSound, transform.position);
             }
 
             hitEffect.SetActive(true);
@@ -65,7 +64,6 @@ namespace HeroSurvivor.Gameplay.Enemies
                 }
 
                 gameObject.SetActive(false);
-
             }
         }
         void Update()

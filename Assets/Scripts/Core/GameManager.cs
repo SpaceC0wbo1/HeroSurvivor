@@ -1,6 +1,7 @@
 namespace HeroSurvivor.Core
 {
     using HeroSurvivor.Gameplay.Player;
+    using HeroSurvivor.Gameplay.Enemies;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.SceneManagement;
@@ -10,11 +11,19 @@ namespace HeroSurvivor.Core
     {
         public GameObject gameOverPanel;
         public Button gameOverBtnRestart;
+
         [SerializeField] private SceneAsset gameSceneName;
+        [SerializeField] private EnemySpawner enemySpawner;
+        [SerializeField] private float waveInterval = 10f;
+
+        private EnemiesWavesController _wavesController;
 
 
         void Start()
         {
+            _wavesController = new EnemiesWavesController (enemySpawner, this, waveInterval);
+            _wavesController.StartWaves();
+
             if (gameOverPanel != null) gameOverPanel.SetActive(false);
 
             if (gameOverBtnRestart != null)
@@ -31,6 +40,11 @@ namespace HeroSurvivor.Core
         private void OnDisable()
         {
             HeroController.OnHeroDied -= GameOver;
+        }
+
+        private void OnDestroy()
+        {
+            _wavesController?.Dispose();
         }
 
         public void GameOver()

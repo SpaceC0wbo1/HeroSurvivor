@@ -797,6 +797,8 @@ MonoBehaviour:
   gameOverPanel: {fileID: 551356309}
   gameOverBtnRestart: {fileID: 1068067254}
   gameSceneName: {fileID: 102900000, guid: 2466e14a34425bd4ba9db07c73400d4b, type: 3}
+  enemySpawner: {fileID: 561691905}
+  waveInterval: 10
 --- !u!4 &438579500
 Transform:
   m_ObjectHideFlags: 0
@@ -1216,7 +1218,6 @@ MonoBehaviour:
   - {fileID: 807554947}
   - {fileID: 807120371}
   poolContainer: {fileID: 1676957090}
-  spawnInterval: 5
   spawnDelay: 2
   poolSize: 10
   enemiesPerWave: 2

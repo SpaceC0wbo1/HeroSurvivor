@@ -13,7 +13,6 @@ namespace HeroSurvivor.Gameplay.Enemies
         public Transform poolContainer;
 
         [Header("Settings")]
-        [SerializeField] private float spawnInterval = 5f;
         [SerializeField] private float spawnDelay = 0.5f;
         [SerializeField] private int poolSize = 10;
         [SerializeField] private int enemiesPerWave = 5;
@@ -22,18 +21,17 @@ namespace HeroSurvivor.Gameplay.Enemies
         private HeroController cachedPlayer;
 
         private WaitForSeconds cachedSpawnDelay;
-        private WaitForSeconds cachedSpawnInterval;
+
+        public bool IsSpawning { get; private set; }
 
         private void Awake()
         {
             cachedSpawnDelay = new WaitForSeconds(spawnDelay);
-            cachedSpawnInterval = new WaitForSeconds(spawnInterval);
+            cachedPlayer = FindAnyObjectByType<HeroController>();
         }
 
         private void Start()
         {
-            cachedPlayer = FindAnyObjectByType<HeroController>();
-
             if (cachedPlayer == null)
             {
                 Debug.LogError("HeroController not found on GameScene!");
@@ -52,8 +50,26 @@ namespace HeroSurvivor.Gameplay.Enemies
                     enemyPool.Enqueue(enemy);
                 }
             }
+        }
 
-            StartCoroutine(SpawnWaveRoutine());
+        public Coroutine SpawnWave()
+        {
+            return StartCoroutine(SpawnWaveRoutine());
+        }
+
+        private IEnumerator SpawnWaveRoutine()
+        {
+            IsSpawning = true;
+
+            for (int i = 0; i < enemiesPerWave; i++)
+            {
+                SpawnEnemy();
+                yield return cachedSpawnDelay;
+            }
+
+            // Збільшуємо кількість ворогів для наступної хвилі
+            enemiesPerWave += 1;
+            IsSpawning = false;
         }
 
         private Enemy InstantiateNewEnemy()
@@ -72,7 +88,6 @@ namespace HeroSurvivor.Gameplay.Enemies
 
         public Enemy GetPooledEnemy()
         {
-            // Перевіряємо наявні об'єкти в пулі
             while (enemyPool.Count > 0)
             {
                 Enemy enemy = enemyPool.Dequeue();
@@ -110,27 +125,6 @@ namespace HeroSurvivor.Gameplay.Enemies
                 enemyScript.transform.position = selectedPoint.position;
                 enemyScript.transform.rotation = selectedPoint.rotation;
                 enemyScript.gameObject.SetActive(true);
-            }
-        }
-
-        private IEnumerator SpawnWaveRoutine()
-        {
-            int currentWave = 1;
-
-            while (true)
-            {
-                Debug.Log($"Wave {currentWave} started!");
-
-                for (int i = 0; i < enemiesPerWave; i++)
-                {
-                    SpawnEnemy();
-                    yield return cachedSpawnDelay;
-                }
-
-                yield return cachedSpawnInterval;
-
-                enemiesPerWave += 1;
-                currentWave++;
             }
         }
     }

@@ -102,6 +102,10 @@ PrefabInstance:
       propertyPath: config
       value: 
       objectReference: {fileID: 11400000, guid: 09f8d03469f76ef498fe63b44986ffd7, type: 2}
+    - target: {fileID: 3993232825669268118, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
+      propertyPath: damageHitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5cb25da85dacc7d4dbfd1df135da3ff6, type: 3}
     - target: {fileID: 4725350754670060214, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

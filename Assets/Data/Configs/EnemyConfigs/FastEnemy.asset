@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 12
   attackEnemyDamage: 5
-  attackInterval: 2
+  attackInterval: 0.5
   enemyMovSpeed: 12

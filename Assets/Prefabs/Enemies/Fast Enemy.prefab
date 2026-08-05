@@ -102,6 +102,10 @@ PrefabInstance:
       propertyPath: config
       value: 
       objectReference: {fileID: 11400000, guid: 6bc6f037ef03ae944bfde470eac7b4d6, type: 2}
+    - target: {fileID: 3993232825669268118, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
+      propertyPath: damageHitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 9895454cc1983d44ab5ac23555ebc8be, type: 3}
     - target: {fileID: 4725350754670060214, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -144,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5164689641652536908, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
       propertyPath: m_Pitch
-      value: 1.654
+      value: -1.726
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 569491308110829299, guid: 6e0daeb838b89b744b08f2744babdeb4, type: 3}
