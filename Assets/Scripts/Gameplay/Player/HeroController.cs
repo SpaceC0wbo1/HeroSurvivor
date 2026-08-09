@@ -3,7 +3,7 @@ namespace HeroSurvivor.Gameplay.Player
     using UnityEngine;
     using UnityEngine.InputSystem;
     using System;
-    using HeroSurvivor.Gameplay.Weapons;
+    using HeroSurvivor.Gameplay.Shooting;
 
     public class HeroController : MonoBehaviour
     {

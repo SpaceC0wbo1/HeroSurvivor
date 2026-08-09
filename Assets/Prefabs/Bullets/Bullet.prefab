@@ -122,9 +122,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea308c382f26a5e4da43f8f6eeb727af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 8
-  bulletLiveTime: 10
-  hitEffectPrefab: {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
+  _rigidBody: {fileID: 257555971632686647}
+  _bulletLiveTime: 3
+  _bulletSpeed: 20
 --- !u!54 &257555971632686647
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -147,8 +147,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

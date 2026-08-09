@@ -1,20 +1,20 @@
-namespace HeroSurvivor.Gameplay.Weapons
+namespace HeroSurvivor.Gameplay.Shooting
 {
     using System.Collections.Generic;
     using UnityEngine;
 
     public class BulletPoolManager : MonoBehaviour
     {
-        public GameObject bulletPrefab;
-        public Transform spawnBulletTarget;
 
-        [SerializeField] private int poolSize = 30;
+        [SerializeField] private GameObject _bulletPrefab;
+        [SerializeField] private Transform _spawnBulletTarget;
+        [SerializeField] private int _poolSize = 30;
 
         private List<GameObject> pooledObjects = new List<GameObject>();
 
         void Start()
         {
-            for (int i = 0; i < poolSize; i++)
+            for (int i = 0; i < _poolSize; i++)
             {
                 CreateNewBullet();
             }
@@ -22,7 +22,7 @@ namespace HeroSurvivor.Gameplay.Weapons
 
         private GameObject CreateNewBullet()
         {
-            GameObject bullet = Instantiate(bulletPrefab, spawnBulletTarget);
+            GameObject bullet = Instantiate(_bulletPrefab, _spawnBulletTarget);
             bullet.SetActive(false);
             pooledObjects.Add(bullet);
             return bullet;
