@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28be1959b62665b40a919981845d6b6c, type: 3}
+  m_Script: {fileID: 11500000, guid: b12ceeb31a6ac4146bf4803df1f93852, type: 3}
   m_Name: HeroBobConfig
   m_EditorClassIdentifier: 
-  heroName: Bob
-  speed: 8
+  characterName: Hero Bob
+  maxHealth: 100
   damage: 12
-  maxHeroHealth: 100
+  attackInterval: 0
+  speedMovement: 8

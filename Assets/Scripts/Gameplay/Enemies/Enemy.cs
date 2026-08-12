@@ -11,7 +11,7 @@ namespace HeroSurvivor.Gameplay.Enemies
         protected NavMeshAgent agent;
         protected HeroController heroController;
 
-        [SerializeField] private EnemyConfig config;
+        //[SerializeField] private EnemyConfig config;
 
         public AudioClip damageHitSound;
         public GameObject hitEffect;
@@ -23,13 +23,13 @@ namespace HeroSurvivor.Gameplay.Enemies
         public virtual void Start()
         {
             agent = GetComponent<NavMeshAgent>();
-            currentHealth = config.maxHealth;
-            agent.speed = config.enemyMovSpeed;
+            //currentHealth = config.maxHealth;
+            //agent.speed = config.enemyMovSpeed;
         }
 
         private void OnEnable()
         {
-            currentHealth = config.maxHealth;
+            //currentHealth = config.maxHealth;
             hitEffect.transform.SetParent(transform);
             hitEffect.transform.localPosition = Vector3.zero;
         }
@@ -79,9 +79,9 @@ namespace HeroSurvivor.Gameplay.Enemies
 
             if (distance <= 1.5f && Time.time >= nextAttackTime)
             {
-                heroController.TakeDamage(config.attackEnemyDamage);
+                //heroController.TakeDamage(config.attackEnemyDamage);
 
-                nextAttackTime = Time.time + config.attackInterval;
+                //nextAttackTime = Time.time + config.attackInterval;
             }
         }
     }

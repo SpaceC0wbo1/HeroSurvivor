@@ -1,12 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewCharacterConfig", menuName = "Configs/Character Config")]
-
-public class CharacterConfig : ScriptableObject
+    [CreateAssetMenu(fileName = "NewCharacterConfig", menuName = "Configs/Character Config")]
+    public class CharacterConfig : ScriptableObject
     {
-        public string heroName;
-        public float speed;
+        public string characterName;
+        public int maxHealth;
         public int damage;
-        public int maxHeroHealth;
-}
-
+        public float attackInterval;
+        public float speedMovement;
+    }

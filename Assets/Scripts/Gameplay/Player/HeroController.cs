@@ -28,10 +28,10 @@ namespace HeroSurvivor.Gameplay.Player
 
         void Start()
         {
-            currentHeroHealth = characterConfig.maxHeroHealth;
+            currentHeroHealth = characterConfig.maxHealth;
             rb = GetComponent<Rigidbody>();
-            OnHealthChanged?.Invoke(currentHeroHealth, characterConfig.maxHeroHealth);
-            _heroSpeed = characterConfig.speed;
+            OnHealthChanged?.Invoke(currentHeroHealth, characterConfig.maxHealth);
+            _heroSpeed = characterConfig.speedMovement;
         }
 
         void Update()
@@ -88,7 +88,7 @@ namespace HeroSurvivor.Gameplay.Player
         {
             if (movementInput.magnitude > 0f)
             {
-                Vector3 targetPosition = rb.position + movementInput * characterConfig.speed * Time.fixedDeltaTime;
+                Vector3 targetPosition = rb.position + movementInput * characterConfig.speedMovement * Time.fixedDeltaTime;
                 rb.MovePosition(targetPosition);
             }
         }
@@ -102,9 +102,9 @@ namespace HeroSurvivor.Gameplay.Player
                 if (!isStuck)
                 {
                     currentHeroHealth = 0;
-                    Debug.Log($"Oh, no!!! {characterConfig.heroName} is stuck(999(99");
+                    Debug.Log($"Oh, no!!! {characterConfig.characterName} is stuck(999(99");
                     isStuck = true;
-                    OnHealthChanged?.Invoke(currentHeroHealth, characterConfig.maxHeroHealth);
+                    OnHealthChanged?.Invoke(currentHeroHealth, characterConfig.maxHealth);
                     OnHeroDied?.Invoke();
                 }
             }
@@ -113,7 +113,7 @@ namespace HeroSurvivor.Gameplay.Player
         public void TakeDamage(int amount)
         {
             currentHeroHealth -= amount;
-            OnHealthChanged?.Invoke(currentHeroHealth, characterConfig.maxHeroHealth);
+            OnHealthChanged?.Invoke(currentHeroHealth, characterConfig.maxHealth);
 
 
             if (currentHeroHealth <= 0)
