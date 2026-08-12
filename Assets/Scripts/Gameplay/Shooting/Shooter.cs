@@ -52,7 +52,6 @@ namespace HeroSurvivor.Gameplay.Shooting
                 bulletObj.transform.position = spawnPosition;
                 bulletObj.transform.rotation = spawnRotation;
 
-                // Встановлюємо початкову позицію перед активацією
                 if (bulletObj.TryGetComponent<Bullet>(out Bullet bullet))
                 {
                     bullet.SetPosition(spawnPosition);
