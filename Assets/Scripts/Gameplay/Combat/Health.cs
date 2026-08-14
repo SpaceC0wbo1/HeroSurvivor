@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 
 
-namespace HeroSurvivor.Gameplay.Shooting
+namespace HeroSurvivor.Gameplay.Combat
 {
     public class Health : MonoBehaviour
     {
@@ -30,6 +30,7 @@ namespace HeroSurvivor.Gameplay.Shooting
                 return;
 
             _currentHealth -= amount;
+            Debug.Log($"{_characterConfig.name} took {amount} damage. Current HP: {_currentHealth}");
 
             if (_currentHealth <= 0)
             {

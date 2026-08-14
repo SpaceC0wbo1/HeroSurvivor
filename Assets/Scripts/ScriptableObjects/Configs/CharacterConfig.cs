@@ -8,4 +8,5 @@ using UnityEngine;
         public int damage;
         public float attackInterval;
         public float speedMovement;
+        public string targetTag;
     }

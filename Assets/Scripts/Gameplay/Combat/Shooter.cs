@@ -3,7 +3,7 @@ using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using HeroSurvivor.Gameplay.Intent;
 
-namespace HeroSurvivor.Gameplay.Shooting
+namespace HeroSurvivor.Gameplay.Combat
 {
     public class Shooter : MonoBehaviour
     {
@@ -13,6 +13,7 @@ namespace HeroSurvivor.Gameplay.Shooting
         [SerializeField] private BulletPoolManager _bulletPool;
         [SerializeField] private Transform _muzzle;
         [SerializeField] private float _fireRate = 1f;
+        [SerializeField] private CharacterConfig _characterConfig;
 
         private float _cooldown;
 
@@ -55,6 +56,8 @@ namespace HeroSurvivor.Gameplay.Shooting
                 if (bulletObj.TryGetComponent<Bullet>(out Bullet bullet))
                 {
                     bullet.SetPosition(spawnPosition);
+                    bullet.SetTargetTag(_characterConfig.targetTag);
+                    bullet.SetDamage(_characterConfig.damage);
                 }
 
                 bulletObj.SetActive(true);

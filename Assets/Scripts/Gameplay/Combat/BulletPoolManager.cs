@@ -1,8 +1,8 @@
-namespace HeroSurvivor.Gameplay.Shooting
-{
-    using System.Collections.Generic;
-    using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 
+namespace HeroSurvivor.Gameplay.Combat
+{
     public class BulletPoolManager : MonoBehaviour
     {
 

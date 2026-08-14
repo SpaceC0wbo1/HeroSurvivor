@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 375916342539953390}
   m_Layer: 0
   m_Name: NewMovementNShootingHero
-  m_TagString: Hero
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -559,7 +559,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -776,6 +776,7 @@ MonoBehaviour:
   _bulletPool: {fileID: 0}
   _muzzle: {fileID: 3455080502549094294}
   _fireRate: 0.5
+  _characterConfig: {fileID: 11400000, guid: afdf8e07fdefe2c40a652b871732d10a, type: 2}
 --- !u!114 &375916342539953390
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,3 +17,4 @@ MonoBehaviour:
   damage: 20
   attackInterval: 1
   speedMovement: 3
+  targetTag: Player

@@ -17,3 +17,4 @@ MonoBehaviour:
   damage: 12
   attackInterval: 0
   speedMovement: 8
+  targetTag: Enemy
