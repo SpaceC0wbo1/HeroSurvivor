@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using HeroSurvivor.Gameplay.Intent;
+using System;
 
 namespace HeroSurvivor.Gameplay.Combat
 {
@@ -14,6 +15,9 @@ namespace HeroSurvivor.Gameplay.Combat
         [SerializeField] private Transform _muzzle;
         [SerializeField] private float _fireRate = 1f;
         [SerializeField] private CharacterConfig _characterConfig;
+
+        public static event Action AnyShot;
+        public event Action Shot;
 
         private float _cooldown;
 
@@ -64,6 +68,15 @@ namespace HeroSurvivor.Gameplay.Combat
             }
 
             _cooldown = _fireRate;
+
+            Shot?.Invoke();
+            AnyShot?.Invoke();
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStaticEvents()
+        {
+            AnyShot = null;
         }
     }
 }
