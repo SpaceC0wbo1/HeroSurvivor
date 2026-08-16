@@ -339,10 +339,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 744964485330785532, guid: eb7470dcac2e2da439f307cd840e9717, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 718349408}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb7470dcac2e2da439f307cd840e9717, type: 3}
 --- !u!114 &364751594 stripped
 MonoBehaviour:
@@ -507,6 +504,8 @@ GameObject:
   m_Component:
   - component: {fileID: 680058770}
   - component: {fileID: 680058771}
+  - component: {fileID: 680058772}
+  - component: {fileID: 680058773}
   m_Layer: 0
   m_Name: CameraRig
   m_TagString: Untagged
@@ -550,44 +549,52 @@ MonoBehaviour:
   _lookAhead: 1
   _lookAheadStrength: 0.15
   _lookAheadMaxDistance: 2
---- !u!1 &718349404 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 744964485330785532, guid: eb7470dcac2e2da439f307cd840e9717, type: 3}
-  m_PrefabInstance: {fileID: 364751593}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &718349405 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2277974994196159312, guid: eb7470dcac2e2da439f307cd840e9717, type: 3}
-  m_PrefabInstance: {fileID: 364751593}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &718349408
+--- !u!114 &680058772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718349404}
+  m_GameObject: {fileID: 680058769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94fc01d48b5e29e4d86d2a4be9c3b294, type: 3}
+  m_Script: {fileID: 11500000, guid: ac820c478c5f8784583c18ed75fce5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shooter: {fileID: 986307682}
-  _target: {fileID: 718349405}
-  _enabled: 0
-  _kickEulerAngles: {x: -15.5, y: 0, z: 0}
-  _returnDuration: 0.15
---- !u!114 &986307682 stripped
+  _camera: {fileID: 476512226}
+  _onShot: 1
+  _shotIntensity: 0.13
+  _shotDuration: 0.1
+  _shotFrequency: 10
+  _onHit: 1
+  _hitIntensity: 0.2
+  _hitDuration: 0.1
+  _hitFrequency: 15
+  _onKill: 1
+  _killIntensity: 0.6
+  _killDuration: 0.15
+  _killFrequency: 15
+--- !u!114 &680058773
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3641582700955538157, guid: eb7470dcac2e2da439f307cd840e9717, type: 3}
-  m_PrefabInstance: {fileID: 364751593}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 680058769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9924f43257416294497345aa5994217c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f39833907f9bd7479a2eed460e666e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 476512225}
+  _onShot: 0
+  _shotStrength: 0.15
+  _onHit: 0
+  _hitStrength: 0.15
+  _onKill: 1
+  _killStrength: 0.05
+  _hold: 0.08
+  _returnDuration: 0.2
 --- !u!1 &1028684411
 GameObject:
   m_ObjectHideFlags: 0

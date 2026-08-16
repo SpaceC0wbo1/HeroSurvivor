@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 5751338657775754515}
   - component: {fileID: 5443399000330409614}
   - component: {fileID: 6524437490096231325}
+  - component: {fileID: 961723673237783451}
   m_Layer: 0
   m_Name: BaseEnemyNew
   m_TagString: Enemy
@@ -291,6 +292,7 @@ MonoBehaviour:
   _rigidBody: {fileID: 7947745472038664642}
   _modifiers:
   - {fileID: 6274955800019610138}
+  - {fileID: 961723673237783451}
 --- !u!114 &6274955800019610138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +363,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterConfig: {fileID: 11400000, guid: 5808fc4c23af0534bb8ce92072009166, type: 2}
   _intent: {fileID: 8321028059739227691}
+--- !u!114 &961723673237783451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708382055678783975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9474c9dffddd434eab0f90ab6e5f330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 1336125220926406763}
+  _enabled: 1
+  _force: 15
+  _damping: 80
 --- !u!1 &2310539292873942186
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2519477545171829964}
   - component: {fileID: 779109732350564674}
+  - component: {fileID: 6816217505266473517}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -412,6 +431,26 @@ MonoBehaviour:
   _enabled: 1
   _kickEulerAngles: {x: -25, y: 0, z: 0}
   _returnDuration: 0.1
+--- !u!114 &6816217505266473517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310539292873942186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c786dfca27d56145b106e5debb4c4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 1336125220926406763}
+  _renderers:
+  - {fileID: 3913617398855888154}
+  - {fileID: 2278088688038614568}
+  _enabled: 1
+  _flashColor: {r: 1, g: 1, b: 1, a: 1}
+  _flashCount: 3
+  _totalDuration: 0.2
 --- !u!1 &2321968115195584246
 GameObject:
   m_ObjectHideFlags: 0

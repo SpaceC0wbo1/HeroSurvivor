@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 3132871212539504850}
   - component: {fileID: 1564658671184489013}
   - component: {fileID: 3478181550562795834}
+  - component: {fileID: 3199429346593674950}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -174,6 +175,27 @@ MonoBehaviour:
   _enabled: 1
   _kickEulerAngles: {x: -15.5, y: 0, z: 0}
   _returnDuration: 0.15
+--- !u!114 &3199429346593674950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744964485330785532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c786dfca27d56145b106e5debb4c4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 375916342539953390}
+  _renderers:
+  - {fileID: 7645075120023652094}
+  - {fileID: 5396477048747025768}
+  - {fileID: 1171825794195882017}
+  _enabled: 1
+  _flashColor: {r: 1, g: 1, b: 1, a: 1}
+  _flashCount: 3
+  _totalDuration: 0.2
 --- !u!1 &840646978661420566
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,6 +593,7 @@ GameObject:
   - component: {fileID: 4744840588275392815}
   - component: {fileID: 3641582700955538157}
   - component: {fileID: 375916342539953390}
+  - component: {fileID: 5037193697907845657}
   m_Layer: 0
   m_Name: NewMovementNShootingHero
   m_TagString: Player
@@ -770,6 +793,7 @@ MonoBehaviour:
   _rigidBody: {fileID: 8977557249617677682}
   _modifiers:
   - {fileID: 5004094430272940156}
+  - {fileID: 5037193697907845657}
 --- !u!114 &5004094430272940156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,3 +869,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterConfig: {fileID: 11400000, guid: afdf8e07fdefe2c40a652b871732d10a, type: 2}
   _timeToDestroy: 0.08
+--- !u!114 &5037193697907845657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8668406613018254695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9474c9dffddd434eab0f90ab6e5f330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 375916342539953390}
+  _enabled: 1
+  _force: 25
+  _damping: 80

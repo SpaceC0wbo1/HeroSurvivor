@@ -23,6 +23,9 @@ namespace HeroSurvivor.Gameplay.CameraFeature
 
         private void LateUpdate()
         {
+            if (_target == null)
+                return;
+
             Vector3 desired = _target.position + _offset;
 
             if(_lookAhead)
