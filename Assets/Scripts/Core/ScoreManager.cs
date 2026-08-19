@@ -1,9 +1,9 @@
+using System;
+using UnityEngine;
+using HeroSurvivor.Gameplay.Combat;
+
 namespace HeroSurvivor.Core 
 {
-    using System;
-    using UnityEngine;
-    using HeroSurvivor.Gameplay.Enemies;
-
     public class ScoreManager : MonoBehaviour
     {
         private int currentScore = 0;
@@ -21,12 +21,12 @@ namespace HeroSurvivor.Core
 
         private void OnEnable()
         {
-            Enemy.OnEnemyDied += AddScore;
+            //Health.OnEnemyDied += AddScore;
         }
 
         private void OnDisable()
         {
-            Enemy.OnEnemyDied -= AddScore;
+            //Health.OnEnemyDied -= AddScore;
         }
         private void LoadHighScore()
         {
