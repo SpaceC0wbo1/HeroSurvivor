@@ -807,7 +807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _intent: {fileID: 6521466540518129072}
-  _speed: 5
+  _characterConfig: {fileID: 11400000, guid: afdf8e07fdefe2c40a652b871732d10a, type: 2}
 --- !u!114 &2858937355213234248
 MonoBehaviour:
   m_ObjectHideFlags: 0

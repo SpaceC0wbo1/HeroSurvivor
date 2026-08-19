@@ -1,50 +1,49 @@
 namespace HeroSurvivor.Gameplay.Enemies
 {
+    using HeroSurvivor.Gameplay.Pursuit;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using HeroSurvivor.Gameplay.Player;
 
     public class EnemySpawner : MonoBehaviour
     {
-        [Header("Prefabs & Points")]
-        public Enemy[] enemyPrefabs;
-        public Transform[] spawnPoints;
+        [Header("Prefabs & Container")]
+        public GameObject[] enemyPrefabs;
         public Transform poolContainer;
 
-        [Header("Settings")]
+        [Header("3D Top-Down Spawn Settings")]
+        [SerializeField] private Camera targetCamera;
+        [SerializeField] private float viewportMargin = 0.15f;
+        [SerializeField] private float groundY = 0f;
+
+        [Header("Wave Settings")]
         [SerializeField] private float spawnDelay = 0.5f;
         [SerializeField] private int poolSize = 10;
         [SerializeField] private int enemiesPerWave = 5;
 
-        private Queue<Enemy> enemyPool = new Queue<Enemy>();
-        private HeroController cachedPlayer;
-
+        private Queue<GameObject> enemyPool = new Queue<GameObject>();
         private WaitForSeconds cachedSpawnDelay;
+        private Plane groundPlane;
 
         public bool IsSpawning { get; private set; }
 
         private void Awake()
         {
             cachedSpawnDelay = new WaitForSeconds(spawnDelay);
-            cachedPlayer = FindAnyObjectByType<HeroController>();
+
+            if (targetCamera == null)
+            {
+                targetCamera = Camera.main;
+            }
+
+            groundPlane = new Plane(Vector3.up, new Vector3(0f, groundY, 0f));
         }
 
         private void Start()
         {
-            if (cachedPlayer == null)
-            {
-                Debug.LogError("HeroController not found on GameScene!");
-            }
-
-            if (spawnPoints == null || spawnPoints.Length == 0)
-            {
-                Debug.LogError("SpawnPoints array is empty! Assign spawn points in the Inspector.");
-            }
-
             for (int i = 0; i < poolSize; i++)
             {
-                Enemy enemy = InstantiateNewEnemy();
+                GameObject enemy = InstantiateNewEnemy();
                 if (enemy != null)
                 {
                     enemyPool.Enqueue(enemy);
@@ -67,12 +66,11 @@ namespace HeroSurvivor.Gameplay.Enemies
                 yield return cachedSpawnDelay;
             }
 
-            // Збільшуємо кількість ворогів для наступної хвилі
             enemiesPerWave += 1;
             IsSpawning = false;
         }
 
-        private Enemy InstantiateNewEnemy()
+        private GameObject InstantiateNewEnemy()
         {
             if (enemyPrefabs == null || enemyPrefabs.Length == 0)
             {
@@ -81,16 +79,16 @@ namespace HeroSurvivor.Gameplay.Enemies
             }
 
             int randomTypeEnemyIndex = Random.Range(0, enemyPrefabs.Length);
-            Enemy enemy = Instantiate(enemyPrefabs[randomTypeEnemyIndex], poolContainer);
+            GameObject enemy = Instantiate(enemyPrefabs[randomTypeEnemyIndex], poolContainer);
             enemy.gameObject.SetActive(false);
             return enemy;
         }
 
-        public Enemy GetPooledEnemy()
+        public GameObject GetPooledEnemy()
         {
             while (enemyPool.Count > 0)
             {
-                Enemy enemy = enemyPool.Dequeue();
+                GameObject enemy = enemyPool.Dequeue();
 
                 if (enemy != null && !enemy.gameObject.activeInHierarchy)
                 {
@@ -100,7 +98,7 @@ namespace HeroSurvivor.Gameplay.Enemies
             return InstantiateNewEnemy();
         }
 
-        public void ReturnToPool(Enemy enemy)
+        public void ReturnToPool(GameObject enemy)
         {
             enemy.gameObject.SetActive(false);
             enemyPool.Enqueue(enemy);
@@ -108,24 +106,53 @@ namespace HeroSurvivor.Gameplay.Enemies
 
         private void SpawnEnemy()
         {
-            if (spawnPoints == null || spawnPoints.Length == 0) return;
+            GameObject spawnedEnemy = GetPooledEnemy();
 
-            Enemy enemyScript = GetPooledEnemy();
-
-            if (enemyScript != null)
+            if (spawnedEnemy != null)
             {
-                if (cachedPlayer != null)
-                {
-                    enemyScript.Init(cachedPlayer);
-                }
+                Vector3 spawnPosition = GetRandomOffScreenWorldPosition();
 
-                int randomIndex = Random.Range(0, spawnPoints.Length);
-                Transform selectedPoint = spawnPoints[randomIndex];
-
-                enemyScript.transform.position = selectedPoint.position;
-                enemyScript.transform.rotation = selectedPoint.rotation;
-                enemyScript.gameObject.SetActive(true);
+                spawnedEnemy.transform.position = spawnPosition;
+                spawnedEnemy.transform.rotation = Quaternion.identity;
+                spawnedEnemy.gameObject.SetActive(true);
             }
+        }
+
+        private Vector3 GetRandomOffScreenWorldPosition()
+        {
+            if (targetCamera == null)
+            {
+                return transform.position + Vector3.forward * 10f;
+            }
+
+            Vector2 viewportPoint = Vector2.zero;
+            int side = Random.Range(0, 4);
+
+            switch (side)
+            {
+                case 0:
+                    viewportPoint = new Vector2(Random.Range(-viewportMargin, 1f + viewportMargin), 1f + viewportMargin);
+                    break;
+                case 1:
+                    viewportPoint = new Vector2(Random.Range(-viewportMargin, 1f + viewportMargin), -viewportMargin);
+                    break;
+                case 2:
+                    viewportPoint = new Vector2(-viewportMargin, Random.Range(-viewportMargin, 1f + viewportMargin));
+                    break;
+                case 3:
+                    viewportPoint = new Vector2(1f + viewportMargin, Random.Range(-viewportMargin, 1f + viewportMargin));
+                    break;
+            }
+
+            Ray ray = targetCamera.ViewportPointToRay(new Vector3(viewportPoint.x, viewportPoint.y, 0f));
+
+            if (groundPlane.Raycast(ray, out float enterDistance))
+            {
+                return ray.GetPoint(enterDistance);
+            }
+
+            Vector2 randomCircle = Random.insideUnitCircle.normalized * 20f;
+            return new Vector3(transform.position.x + randomCircle.x, groundY, transform.position.z + randomCircle.y);
         }
     }
 }

@@ -22,7 +22,6 @@ namespace HeroSurvivor.Gameplay.Combat
 
             if (health != null)
             {
-                // Напрямок удару від ворога до гравця
                 Vector3 direction = other.transform.position - transform.position;
                 direction.y = 0f;
                 direction.Normalize();

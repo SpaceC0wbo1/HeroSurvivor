@@ -2111,7 +2111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highScoreText: {fileID: 399301483}
-  gameSceneName: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+  gameSceneName: {fileID: 102900000, guid: 587e0659a213c3740a81ac3f7d946359, type: 3}
   howToPlayPanel: {fileID: 244959092}
 --- !u!4 &1410693603
 Transform:
