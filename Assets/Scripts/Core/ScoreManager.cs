@@ -21,12 +21,12 @@ namespace HeroSurvivor.Core
 
         private void OnEnable()
         {
-            HealthEnemy.OnEnemyDied += AddScore;
+            //Health.OnEnemyDied += AddScore;
         }
 
         private void OnDisable()
         {
-            HealthEnemy.OnEnemyDied -= AddScore;
+            //Health.OnEnemyDied -= AddScore;
         }
         private void LoadHighScore()
         {

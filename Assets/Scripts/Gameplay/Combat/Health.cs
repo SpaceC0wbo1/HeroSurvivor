@@ -14,20 +14,17 @@ namespace HeroSurvivor.Gameplay.Combat
         public event Action<Vector3> Damaged;
         public event Action<Vector3> Killed;
 
-        [SerializeField] protected CharacterConfig _characterConfig;
-        [SerializeField] protected float _timeToDestroy = 0.08f;
+        [SerializeField] private CharacterConfig _characterConfig;
+        [SerializeField] private float _timeToDestroy = 0.08f;
 
-        protected int _currentHealth;
+        private int _currentHealth;
 
-        public int CurrentHealth => _currentHealth;
-        public int MaxHealth => _characterConfig != null ? _characterConfig.maxHealth : 0;
-
-        protected virtual void Awake()
+        private void Awake()
         {
             _currentHealth = _characterConfig.maxHealth;
         }
 
-        public virtual void TakeDamage(int amount, Vector3 direction)
+        public void TakeDamage(int amount, Vector3 direction)
         {
             if (_currentHealth <= 0)
                 return;

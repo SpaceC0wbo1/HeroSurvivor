@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace HeroSurvivor.Gameplay.Enemies
 {
+    using HeroSurvivor.Gameplay.Pursuit;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+
     public class EnemySpawner : MonoBehaviour
     {
         [Header("Prefabs & Container")]
