@@ -1,11 +1,11 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using HeroSurvivor.Core;
+using HeroSurvivor.Gameplay.Combat;
+
 namespace HeroSurvivor.UI
 {
-    using UnityEngine;
-    using UnityEngine.UI;
-    using TMPro;
-    using HeroSurvivor.Core;
-    using HeroSurvivor.Gameplay.Player;
-
     public class UIManager : MonoBehaviour
     {
         public TextMeshProUGUI scoreText;
@@ -16,14 +16,14 @@ namespace HeroSurvivor.UI
 
         private void OnEnable()
         {
-            HeroController.OnHealthChanged += UpdateHealth;
+            HealthHero.OnHealthChanged += UpdateHealth;
             ScoreManager.OnScoreChanged += UpdateCurrentScoreUI;
             ScoreManager.OnHighScoreChanged += UpdateHighScoreUI;
 
         }
         private void OnDisable()
         {
-            HeroController.OnHealthChanged -= UpdateHealth;
+            HealthHero.OnHealthChanged -= UpdateHealth;
             ScoreManager.OnScoreChanged -= UpdateCurrentScoreUI;
             ScoreManager.OnHighScoreChanged -= UpdateHighScoreUI;
         }

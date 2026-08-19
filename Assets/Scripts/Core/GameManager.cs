@@ -1,12 +1,13 @@
+using HeroSurvivor.Gameplay.Player;
+using HeroSurvivor.Gameplay.Enemies;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using HeroSurvivor.Gameplay.Combat;
+
 namespace HeroSurvivor.Core
 {
-    using HeroSurvivor.Gameplay.Player;
-    using HeroSurvivor.Gameplay.Enemies;
-    using UnityEditor;
-    using UnityEngine;
-    using UnityEngine.SceneManagement;
-    using UnityEngine.UI;
-
     public class GameManager : MonoBehaviour
     {
         public GameObject gameOverPanel;
@@ -25,21 +26,16 @@ namespace HeroSurvivor.Core
             _wavesController.StartWaves();
 
             if (gameOverPanel != null) gameOverPanel.SetActive(false);
-
-            if (gameOverBtnRestart != null)
-            {
-                gameOverBtnRestart.onClick.AddListener(RestartGame);
-            }
         }
 
         private void OnEnable()
         {
-            HeroController.OnHeroDied += GameOver;
+            HealthHero.OnHeroDied += GameOver;
         }
 
         private void OnDisable()
         {
-            HeroController.OnHeroDied -= GameOver;
+            HealthHero.OnHeroDied -= GameOver;
         }
 
         private void OnDestroy()

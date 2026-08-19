@@ -186,11 +186,11 @@ GameObject:
   - component: {fileID: 8321028059739227691}
   - component: {fileID: 6202201257941855747}
   - component: {fileID: 6274955800019610138}
-  - component: {fileID: 1336125220926406763}
   - component: {fileID: 5751338657775754515}
   - component: {fileID: 5443399000330409614}
   - component: {fileID: 6524437490096231325}
   - component: {fileID: 961723673237783451}
+  - component: {fileID: 318476235583553125}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Enemy
@@ -307,20 +307,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _intent: {fileID: 8321028059739227691}
   _characterConfig: {fileID: 11400000, guid: 5808fc4c23af0534bb8ce92072009166, type: 2}
---- !u!114 &1336125220926406763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1708382055678783975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 516eb10b0232ae745877e34fb4795721, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _characterConfig: {fileID: 11400000, guid: 5808fc4c23af0534bb8ce92072009166, type: 2}
-  _timeToDestroy: 0.08
 --- !u!114 &5751338657775754515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,10 +361,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9474c9dffddd434eab0f90ab6e5f330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 1336125220926406763}
+  _health: {fileID: 318476235583553125}
   _enabled: 1
   _force: 15
   _damping: 80
+--- !u!114 &318476235583553125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708382055678783975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 957a3a27750857e49ad82c54749bd883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterConfig: {fileID: 11400000, guid: 5808fc4c23af0534bb8ce92072009166, type: 2}
+  _timeToDestroy: 0.08
 --- !u!1 &2310539292873942186
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,11 +426,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5969ebd76d5405144a18792d7374e9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 1336125220926406763}
+  _health: {fileID: 318476235583553125}
   _target: {fileID: 2519477545171829964}
   _enabled: 1
   _kickEulerAngles: {x: -25, y: 0, z: 0}
-  _returnDuration: 0.1
+  _returnDuration: 0.25
 --- !u!114 &6816217505266473517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c786dfca27d56145b106e5debb4c4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 1336125220926406763}
+  _health: {fileID: 318476235583553125}
   _renderers:
   - {fileID: 3913617398855888154}
   - {fileID: 2278088688038614568}
