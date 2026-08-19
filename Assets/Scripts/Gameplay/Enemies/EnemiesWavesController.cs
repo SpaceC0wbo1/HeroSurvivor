@@ -1,9 +1,9 @@
+using UnityEngine;
+using System;
+using System.Collections;
+
 namespace HeroSurvivor.Gameplay.Enemies
 {
-    using UnityEngine;
-    using System;
-    using System.Collections;
-
     public class EnemiesWavesController : IDisposable
     {
         private readonly EnemySpawner _spawner;

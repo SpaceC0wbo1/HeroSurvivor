@@ -1,11 +1,11 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEditor.SearchService;
+using UnityEditor;
+
 namespace HeroSurvivor.Core
 {
-    using UnityEngine;
-    using UnityEngine.SceneManagement;
-    using TMPro;
-    using UnityEditor.SearchService;
-    using UnityEditor;
-
     public class MenuManager : MonoBehaviour
     {
         [SerializeField] private TMP_Text highScoreText;
