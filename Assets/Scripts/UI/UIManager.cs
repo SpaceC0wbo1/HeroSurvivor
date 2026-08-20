@@ -10,6 +10,7 @@ namespace HeroSurvivor.UI
     {
         public TextMeshProUGUI scoreText;
         public Slider healthSlider;
+        public GameObject fillerHealth;
 
         [SerializeField] private TMP_Text currentScoreText;
         [SerializeField] private TMP_Text highScoreText;
@@ -32,6 +33,11 @@ namespace HeroSurvivor.UI
         {
             healthSlider.maxValue = maxHealth;
             healthSlider.value = currentHealth;
+
+            if (currentHealth <= 0)
+            {
+                fillerHealth.SetActive(false);
+            }
         }
 
         private void UpdateCurrentScoreUI(int score)

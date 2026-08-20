@@ -16,12 +16,14 @@ namespace HeroSurvivor.Core
         [SerializeField] private SceneAsset gameSceneName;
         [SerializeField] private EnemySpawner enemySpawner;
         [SerializeField] private float waveInterval = 10f;
+        [SerializeField] private CursorManager cursorManager;
 
         private EnemiesWavesController _wavesController;
 
 
         void Start()
         {
+            cursorManager.SetCombatCursor();
             _wavesController = new EnemiesWavesController (enemySpawner, this, waveInterval);
             _wavesController.StartWaves();
 
@@ -46,6 +48,7 @@ namespace HeroSurvivor.Core
         public void GameOver()
         {
             Time.timeScale = 0f;
+            cursorManager.SetDefaultCursor();
             gameOverPanel.SetActive(true);
         }
 
