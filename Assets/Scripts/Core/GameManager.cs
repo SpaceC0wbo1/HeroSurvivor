@@ -1,10 +1,13 @@
 using HeroSurvivor.Gameplay.Player;
 using HeroSurvivor.Gameplay.Enemies;
-using UnityEditor;
+using HeroSurvivor.Gameplay.Health;
+using HeroSurvivor.Gameplay.Combat;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using HeroSurvivor.Gameplay.Combat;
+using Zenject;
+
 
 namespace HeroSurvivor.Core
 {
@@ -16,12 +19,20 @@ namespace HeroSurvivor.Core
         [SerializeField] private SceneAsset gameSceneName;
         [SerializeField] private EnemySpawner enemySpawner;
         [SerializeField] private float waveInterval = 10f;
+        [SerializeField] private CursorManager cursorManager;
 
         private EnemiesWavesController _wavesController;
+        private SignalBus _signalBus;
 
+        [Inject]
+        public void Construct(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
 
         void Start()
         {
+            cursorManager.SetCombatCursor();
             _wavesController = new EnemiesWavesController (enemySpawner, this, waveInterval);
             _wavesController.StartWaves();
 
@@ -30,12 +41,12 @@ namespace HeroSurvivor.Core
 
         private void OnEnable()
         {
-            HealthHero.OnHeroDied += GameOver;
+            _signalBus?.Subscribe<HeroDiedSignal>(GameOver);
         }
 
         private void OnDisable()
         {
-            HealthHero.OnHeroDied -= GameOver;
+            _signalBus?.TryUnsubscribe<HeroDiedSignal>(GameOver);
         }
 
         private void OnDestroy()
@@ -46,6 +57,7 @@ namespace HeroSurvivor.Core
         public void GameOver()
         {
             Time.timeScale = 0f;
+            cursorManager.SetDefaultCursor();
             gameOverPanel.SetActive(true);
         }
 

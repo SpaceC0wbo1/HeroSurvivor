@@ -1,6 +1,8 @@
+using HeroSurvivor.Gameplay.Health;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace HeroSurvivor.Gameplay.Enemies
 {
@@ -20,22 +22,31 @@ namespace HeroSurvivor.Gameplay.Enemies
         [SerializeField] private int poolSize = 10;
         [SerializeField] private int enemiesPerWave = 5;
 
-        private Queue<GameObject> enemyPool = new Queue<GameObject>();
-        private WaitForSeconds cachedSpawnDelay;
-        private Plane groundPlane;
+        private readonly Queue<GameObject> enemyPool = new Queue<GameObject>();
+        private readonly Dictionary<GameObject, EnemyHealthController> _controllers = new Dictionary<GameObject, EnemyHealthController>();
+
+        private WaitForSeconds _cachedSpawnDelay;
+        private Plane _groundPlane;
+        private SignalBus _signalBus;
 
         public bool IsSpawning { get; private set; }
 
+        [Inject]
+        public void Construct(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
+
         private void Awake()
         {
-            cachedSpawnDelay = new WaitForSeconds(spawnDelay);
+            _cachedSpawnDelay = new WaitForSeconds(spawnDelay);
 
             if (targetCamera == null)
             {
                 targetCamera = Camera.main;
             }
 
-            groundPlane = new Plane(Vector3.up, new Vector3(0f, groundY, 0f));
+            _groundPlane = new Plane(Vector3.up, new Vector3(0f, groundY, 0f));
         }
 
         private void Start()
@@ -62,7 +73,7 @@ namespace HeroSurvivor.Gameplay.Enemies
             for (int i = 0; i < enemiesPerWave; i++)
             {
                 SpawnEnemy();
-                yield return cachedSpawnDelay;
+                yield return _cachedSpawnDelay;
             }
 
             enemiesPerWave += 1;
@@ -80,6 +91,21 @@ namespace HeroSurvivor.Gameplay.Enemies
             int randomTypeEnemyIndex = Random.Range(0, enemyPrefabs.Length);
             GameObject enemy = Instantiate(enemyPrefabs[randomTypeEnemyIndex], poolContainer);
             enemy.gameObject.SetActive(false);
+
+            EnemyHealthView view = enemy.GetComponent<EnemyHealthView>();
+
+            if (view == null)
+            {
+                Debug.LogError($"Enemy prefab '{enemy.name}' is missing EnemyHealthView!");
+                return enemy;
+            }
+
+            int maxHealth = view.Config != null ? view.Config.maxHealth : 10;
+
+            var model = new HealthModel(maxHealth);
+            var controller = new EnemyHealthController(model, view, _signalBus, ReturnToPool);
+
+            _controllers.Add(enemy, controller);
             return enemy;
         }
 
@@ -109,8 +135,12 @@ namespace HeroSurvivor.Gameplay.Enemies
 
             if (spawnedEnemy != null)
             {
-                Vector3 spawnPosition = GetRandomOffScreenWorldPosition();
+                if (_controllers.TryGetValue(spawnedEnemy, out var controller))
+                {
+                    controller.ResetState();
+                }
 
+                Vector3 spawnPosition = GetRandomOffScreenWorldPosition();
                 spawnedEnemy.transform.position = spawnPosition;
                 spawnedEnemy.transform.rotation = Quaternion.identity;
                 spawnedEnemy.gameObject.SetActive(true);
@@ -145,13 +175,21 @@ namespace HeroSurvivor.Gameplay.Enemies
 
             Ray ray = targetCamera.ViewportPointToRay(new Vector3(viewportPoint.x, viewportPoint.y, 0f));
 
-            if (groundPlane.Raycast(ray, out float enterDistance))
+            if (_groundPlane.Raycast(ray, out float enterDistance))
             {
                 return ray.GetPoint(enterDistance);
             }
 
             Vector2 randomCircle = Random.insideUnitCircle.normalized * 20f;
             return new Vector3(transform.position.x + randomCircle.x, groundY, transform.position.z + randomCircle.y);
+        }
+
+        private void OnDestroy()
+        {
+            foreach(var controller in _controllers.Values)
+                controller.Dispose();
+
+            _controllers.Clear();
         }
     }
 }

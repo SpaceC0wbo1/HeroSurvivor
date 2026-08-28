@@ -1,4 +1,5 @@
 using HeroSurvivor.Gameplay.Intent;
+using HeroSurvivor.Gameplay.Interfaces;
 using UnityEngine;
 
 namespace HeroSurvivor.Gameplay.Combat
@@ -18,16 +19,16 @@ namespace HeroSurvivor.Gameplay.Combat
             if (Time.time < nextAttackTime)
                 return;
 
-            Health health = other.GetComponentInParent<Health>();
-
-            if (health != null)
+            if (other.GetComponentInParent<IDamageable>() is IDamageable damageable)
             {
-                Vector3 direction = other.transform.position - transform.position;
-                direction.y = 0f;
-                direction.Normalize();
+                {
+                    Vector3 direction = other.transform.position - transform.position;
+                    direction.y = 0f;
+                    direction.Normalize();
 
-                health.TakeDamage(_characterConfig.damage, direction);
-                nextAttackTime = Time.time + _characterConfig.attackInterval;
+                    damageable.TakeDamage(_characterConfig.damage, direction);
+                    nextAttackTime = Time.time + _characterConfig.attackInterval;
+                }
             }
         }
     }

@@ -10,7 +10,7 @@ namespace HeroSurvivor.Gameplay.Combat
         [SerializeField] private Transform _spawnBulletTarget;
         [SerializeField] private int _poolSize = 30;
 
-        private List<GameObject> pooledObjects = new List<GameObject>();
+        private Queue<GameObject> _pool = new Queue<GameObject>();
 
         void Start()
         {
@@ -24,17 +24,24 @@ namespace HeroSurvivor.Gameplay.Combat
         {
             GameObject bullet = Instantiate(_bulletPrefab, _spawnBulletTarget);
             bullet.SetActive(false);
-            pooledObjects.Add(bullet);
+            _pool.Enqueue(bullet);
             return bullet;
         }
 
         public GameObject GetPooledObject()
         {
-            foreach (GameObject obj in pooledObjects)
-            {
-                if (!obj.activeInHierarchy)
+            int checkedCount = 0;
+            int initialCount = _pool.Count;
+
+            while (checkedCount < initialCount) 
+            { 
+                GameObject bullet = _pool.Dequeue();
+                _pool.Enqueue(bullet);
+                checkedCount++;
+
+                if (!bullet.activeInHierarchy)
                 {
-                    return obj;
+                    return bullet;
                 }
             }
 
