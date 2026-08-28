@@ -1,6 +1,8 @@
 using HeroSurvivor.Gameplay.Combat;
+using HeroSurvivor.Gameplay.Health;
 using PrimeTween;
 using UnityEngine;
+using Zenject;
 
 namespace HeroSurvivor
 {
@@ -26,6 +28,13 @@ namespace HeroSurvivor
         [SerializeField] private float _returnDuration = 0.2f;
 
         private float _baseFov;
+        private SignalBus _signalBus;
+
+        [Inject]
+        public void Construct (SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
 
         private void Awake()
         {
@@ -34,16 +43,16 @@ namespace HeroSurvivor
 
         private void OnEnable()
         {
-            Shooter.AnyShot += OnShot;
-            Health.AnyDamaged += OnDamaged;
-            Health.AnyKilled += OnKilled;
+            _signalBus?.Subscribe<WeaponFiredSignal>(OnShot);
+            _signalBus?.Subscribe<AnyDamagedSignal>(OnDamaged);
+            _signalBus?.Subscribe<AnyKilledSignal>(OnKilled);
         }
 
         private void OnDisable()
         {
-            Shooter.AnyShot -= OnShot;
-            Health.AnyDamaged -= OnDamaged;
-            Health.AnyKilled -= OnKilled;
+            _signalBus?.TryUnsubscribe<WeaponFiredSignal>(OnShot);
+            _signalBus?.TryUnsubscribe<AnyDamagedSignal>(OnDamaged);
+            _signalBus?.TryUnsubscribe<AnyKilledSignal>(OnKilled);
         }
 
         private void OnShot()
@@ -52,13 +61,13 @@ namespace HeroSurvivor
                 Punch(_shotStrength);
         }
 
-        private void OnDamaged(Vector3 direction)
+        private void OnDamaged(AnyDamagedSignal signal)
         {
             if (_onHit)
                 Punch(_hitStrength);
         }
 
-        private void OnKilled(Vector3 direction)
+        private void OnKilled(AnyKilledSignal signal)
         {
             if (_onKill)
                 Punch(_killStrength);

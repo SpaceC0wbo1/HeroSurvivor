@@ -1,8 +1,11 @@
+using HeroSurvivor.Gameplay.Intent;
+using HeroSurvivor.Gameplay.Health;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
-using HeroSurvivor.Gameplay.Intent;
 using System;
+using Zenject;
+
 
 namespace HeroSurvivor.Gameplay.Combat
 {
@@ -16,10 +19,16 @@ namespace HeroSurvivor.Gameplay.Combat
         [SerializeField] private float _fireRate = 1f;
         [SerializeField] private CharacterConfig _characterConfig;
 
-        public static event Action AnyShot;
         public event Action Shot;
 
         private float _cooldown;
+        private SignalBus _signalBus;
+
+        [Inject]
+        public void Construct(SignalBus signalBus) 
+        { 
+            _signalBus = signalBus;
+        }
 
         void Update()
         {
@@ -70,13 +79,7 @@ namespace HeroSurvivor.Gameplay.Combat
             _cooldown = _fireRate;
 
             Shot?.Invoke();
-            AnyShot?.Invoke();
-        }
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void ResetStaticEvents()
-        {
-            AnyShot = null;
+            _signalBus?.Fire<WeaponFiredSignal>();
         }
     }
 }

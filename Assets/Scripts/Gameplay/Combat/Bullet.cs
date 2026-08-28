@@ -1,4 +1,5 @@
 using UnityEngine;
+using HeroSurvivor.Gameplay.Interfaces;
 
 namespace HeroSurvivor.Gameplay.Combat
 {
@@ -11,50 +12,43 @@ namespace HeroSurvivor.Gameplay.Combat
         private int _sourceDamage;
         private Vector3 _sourcePosition;
         private string _targetTag;
+        private float _lifeTimer;
 
         private void OnEnable()
         {
-            Launch();
-        }
-
-        public void Launch()
-        {
+            _lifeTimer = _bulletLiveTime;
             _rigidBody.linearVelocity = transform.forward * _bulletSpeed;
-            Invoke("Deactivate", _bulletLiveTime);
         }
 
-        public void SetPosition(Vector3 sourcePosition)
+        private void Update()
         {
-            _sourcePosition = sourcePosition;
+            _lifeTimer -= Time.deltaTime;
+            if (_lifeTimer <= 0) 
+            { 
+                Deactivate(); 
+            }
         }
 
-        public void SetDamage(int sourceDamage)
-        {
-            _sourceDamage = sourceDamage;
-        }
+        public void SetPosition(Vector3 sourcePosition) => _sourcePosition = sourcePosition;
 
-        public void SetTargetTag(string targetTag)
-        {
-            _targetTag = targetTag;
-        }
+        public void SetDamage(int sourceDamage) => _sourceDamage = sourceDamage;
+
+        public void SetTargetTag(string targetTag) => _targetTag = targetTag;
+
 
         private void OnTriggerEnter(Collider other)
         {
             if (!string.IsNullOrEmpty(_targetTag) && !other.CompareTag(_targetTag))
                 return;
 
-            Health health = other.GetComponentInParent<Health>();
-
-            if (health != null)
-            {
+            if (other.GetComponentInParent<IDamageable>() is IDamageable damageable)
+            { 
                 Vector3 direction = other.transform.position - _sourcePosition;
                 direction.y = 0f;
                 direction.Normalize();
-                _rigidBody.linearVelocity = Vector3.zero;
-
-                health.TakeDamage(_sourceDamage, direction);
-                gameObject.SetActive(false);
-                CancelInvoke("Deactivate");
+                
+                damageable.TakeDamage(_sourceDamage, direction);
+                Deactivate();
             }
         }
 

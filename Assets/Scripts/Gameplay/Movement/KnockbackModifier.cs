@@ -1,31 +1,36 @@
 using HeroSurvivor.Gameplay.Combat;
+using HeroSurvivor.Gameplay.Interfaces;
 using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
 
 namespace HeroSurvivor.Gameplay.Movement
 {
     public class KnockbackModifier : MovementModifier
     {
-        [Header("Setup")]
-        [SerializeField] private Health _health;
-
         [Header("Knockback")]
         [SerializeField] private bool _enabled;
         [SerializeField] private float _force = 15f;
         [SerializeField] private float _damping = 80f;
 
         private Vector3 _currentImpulse;
+        private IHitFeedback _hitFeedback;
+
+        private void Awake()
+        {
+            _hitFeedback = GetComponent<IHitFeedback>();
+        }
 
         private void OnEnable()
         {
-            _health.Damaged += OnHit;
-            _health.Killed += OnHit;
+            if (_hitFeedback != null)
+                _hitFeedback.OnHit += OnHit;
         }
 
         private void OnDisable()
         {
-            _health.Damaged -= OnHit;
-            _health.Killed -= OnHit;
+            if (_hitFeedback != null)
+                _hitFeedback.OnHit -= OnHit;
+
+            _currentImpulse = Vector3.zero;
         }
 
         private void OnHit(Vector3 direction)

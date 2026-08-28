@@ -1,8 +1,11 @@
+using HeroSurvivor.Gameplay.Combat;
+using HeroSurvivor.Gameplay.Health;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using HeroSurvivor.Core;
-using HeroSurvivor.Gameplay.Combat;
+using Zenject;
+
 
 namespace HeroSurvivor.UI
 {
@@ -15,28 +18,46 @@ namespace HeroSurvivor.UI
         [SerializeField] private TMP_Text currentScoreText;
         [SerializeField] private TMP_Text highScoreText;
 
+        private SignalBus _signalBus;
+
+        [Inject]
+        public void Construct (SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
+
         private void OnEnable()
         {
-            HealthHero.OnHealthChanged += UpdateHealth;
+            _signalBus?.Subscribe<HeroHealthChangedSignal>(OnHeroHealthChanged);
+
             ScoreManager.OnScoreChanged += UpdateCurrentScoreUI;
             ScoreManager.OnHighScoreChanged += UpdateHighScoreUI;
 
         }
         private void OnDisable()
         {
-            HealthHero.OnHealthChanged -= UpdateHealth;
+            _signalBus?.TryUnsubscribe<HeroHealthChangedSignal>(OnHeroHealthChanged);
+
             ScoreManager.OnScoreChanged -= UpdateCurrentScoreUI;
             ScoreManager.OnHighScoreChanged -= UpdateHighScoreUI;
         }
 
+        private void OnHeroHealthChanged (HeroHealthChangedSignal signal)
+        {
+            UpdateHealth(signal.CurrentHealth, signal.MaxHealth);
+        }
+
         public void UpdateHealth(int currentHealth, int maxHealth)
         {
-            healthSlider.maxValue = maxHealth;
-            healthSlider.value = currentHealth;
-
-            if (currentHealth <= 0)
+            if (healthSlider != null)
             {
-                fillerHealth.SetActive(false);
+                healthSlider.maxValue = maxHealth;
+                healthSlider.value = currentHealth;
+            }
+
+            if (fillerHealth != null)
+            {
+                fillerHealth.SetActive(currentHealth > 0);
             }
         }
 

@@ -1,6 +1,9 @@
+using HeroSurvivor.Gameplay.Combat;
+using HeroSurvivor.Gameplay.Health;
 using System;
 using UnityEngine;
-using HeroSurvivor.Gameplay.Combat;
+using Zenject;
+
 
 namespace HeroSurvivor.Core 
 {
@@ -14,6 +17,14 @@ namespace HeroSurvivor.Core
         public static event Action<int> OnScoreChanged;
         public static event Action<int> OnHighScoreChanged;
 
+        private SignalBus _signalBus;
+
+        [Inject]
+        public void Construct(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
+
         void Start()
         {
             LoadHighScore();
@@ -21,13 +32,19 @@ namespace HeroSurvivor.Core
 
         private void OnEnable()
         {
-            HealthEnemy.OnEnemyDied += AddScore;
+            _signalBus?.Subscribe<EnemyDiedSignal>(OnEnemyDied);
         }
 
         private void OnDisable()
         {
-            HealthEnemy.OnEnemyDied -= AddScore;
+            _signalBus?.TryUnsubscribe<EnemyDiedSignal>(OnEnemyDied);
         }
+
+        private void OnEnemyDied (EnemyDiedSignal signal)
+        {
+            AddScore(signal.RewardPoints);
+        }
+
         private void LoadHighScore()
         {
             if (PlayerPrefs.HasKey(HIGH_SCORE_KEY))

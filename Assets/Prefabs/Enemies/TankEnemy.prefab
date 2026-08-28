@@ -120,6 +120,10 @@ PrefabInstance:
       propertyPath: _characterConfig
       value: 
       objectReference: {fileID: 11400000, guid: 392ec4e4e67ee33459dbcf571cdfd6c9, type: 2}
+    - target: {fileID: 1330440165960385249, guid: 61bd5c2266b02f24c99fd2db2cbf24b7, type: 3}
+      propertyPath: _characterConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 392ec4e4e67ee33459dbcf571cdfd6c9, type: 2}
     - target: {fileID: 1336125220926406763, guid: 61bd5c2266b02f24c99fd2db2cbf24b7, type: 3}
       propertyPath: _characterConfig
       value: 

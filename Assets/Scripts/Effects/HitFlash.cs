@@ -1,4 +1,5 @@
 using HeroSurvivor.Gameplay.Combat;
+using HeroSurvivor.Gameplay.Interfaces;
 using PrimeTween;
 using UnityEngine;
 
@@ -9,7 +10,6 @@ namespace HeroSurvivor.GameFeel
         private static readonly int _baseColorId = Shader.PropertyToID("_BaseColor");
 
         [Header("Setup")]
-        [SerializeField] private Health _health;
         [SerializeField] private Renderer[] _renderers;
 
         [Header("Flash")]
@@ -18,11 +18,14 @@ namespace HeroSurvivor.GameFeel
         [SerializeField] private int _flashCount = 3;
         [SerializeField] private float _totalDuration = 0.2f;
 
+        private IHitFeedback _hitFeedback;
         private Material[] _materials;
         private Color[] _baseColors;
 
         public void Awake()
         {
+            _hitFeedback = GetComponentInParent<IHitFeedback>();
+            
             _materials = new Material[_renderers.Length];
             _baseColors = new Color[_renderers.Length];
 
@@ -35,14 +38,14 @@ namespace HeroSurvivor.GameFeel
 
         private void OnEnable()
         {
-            _health.Damaged += OnHit;
-            _health.Killed += OnHit;
+            if (_hitFeedback != null)
+                _hitFeedback.OnHit += OnHit;
         }
 
         private void OnDisable()
         {
-            _health.Damaged -= OnHit;
-            _health.Killed -= OnHit;
+            if (_hitFeedback != null)
+                _hitFeedback.OnHit -= OnHit;
         }
 
         private void OnHit(Vector3 direction)
