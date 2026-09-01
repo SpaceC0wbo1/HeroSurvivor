@@ -2,7 +2,7 @@ using HeroSurvivor.Gameplay.Combat;
 using PrimeTween;
 using UnityEngine;
 
-namespace HeroSurvivor.GameFeel
+namespace HeroSurvivor.Effects
 {
     public class TiltOnShot : MonoBehaviour
     {

@@ -2,7 +2,7 @@ using UnityEngine;
 using PrimeTween;
 using HeroSurvivor.Gameplay.Combat;
 
-namespace HeroSurvivor.GameFeel
+namespace HeroSurvivor.Effects
 {
     public class SquashOnShot : MonoBehaviour
     {

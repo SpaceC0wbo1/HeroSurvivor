@@ -4,7 +4,7 @@ using PrimeTween;
 using UnityEngine;
 using Zenject;
 
-namespace HeroSurvivor.GameFeel
+namespace HeroSurvivor.Effects
 {
     public class ScreenShake : MonoBehaviour
     {

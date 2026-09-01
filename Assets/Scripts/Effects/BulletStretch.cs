@@ -1,7 +1,7 @@
 using UnityEngine;
 using PrimeTween;
 
-namespace HeroSurvivor.GameFeel
+namespace HeroSurvivor.Effects
 {
     public class BulletStretch : MonoBehaviour
     {

@@ -1,5 +1,6 @@
 using HeroSurvivor.Gameplay.Intent;
 using HeroSurvivor.Gameplay.Interfaces;
+using HeroSurvivor.Gameplay.Animation;
 using UnityEngine;
 
 namespace HeroSurvivor.Gameplay.Combat
@@ -8,6 +9,7 @@ namespace HeroSurvivor.Gameplay.Combat
     {
         [SerializeField] private CharacterConfig _characterConfig;
         [SerializeField] private IntentSource _intent;
+        [SerializeField] private EnemyAnimatorView _animatorView;
 
         private float nextAttackTime;
 
@@ -28,6 +30,7 @@ namespace HeroSurvivor.Gameplay.Combat
 
                     damageable.TakeDamage(_characterConfig.damage, direction);
                     nextAttackTime = Time.time + _characterConfig.attackInterval;
+                    _animatorView.PlayAttack();
                 }
             }
         }

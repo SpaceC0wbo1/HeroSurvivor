@@ -1,14 +1,17 @@
+using HeroSurvivor.Gameplay.Interfaces;
+using HeroSurvivor.Gameplay.Animation;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
 using UnityEngine;
-using HeroSurvivor.Gameplay.Interfaces;
+
 
 namespace HeroSurvivor.Gameplay.Health
 {
     public class HeroHealthView : MonoBehaviour, IDamageable, IHitFeedback
     {
         [SerializeField] private float _timeToDestroy = 0.08f;
+        [SerializeField] private HeroAnimatorView _animatorView;
 
         public event Action<Vector3> OnHit;
 
@@ -26,7 +29,13 @@ namespace HeroSurvivor.Gameplay.Health
 
         public void PlayDeath(Vector3 hitDirection)
         {
-            DestroyAsync(_timeToDestroy, destroyCancellationToken).Forget();
+            float delay = _timeToDestroy;
+
+            if (_animatorView != null) 
+            { 
+                delay = _animatorView.PlayDeath(); 
+            }
+            DestroyAsync(delay, destroyCancellationToken).Forget();
         }
 
         public void PlayHitEffect(Vector3 hitDirection)

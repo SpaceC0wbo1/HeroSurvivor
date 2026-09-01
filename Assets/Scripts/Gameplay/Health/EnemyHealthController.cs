@@ -32,6 +32,7 @@ namespace HeroSurvivor.Gameplay.Health
         public void ResetState()
         {
             _model.ResetHealth();
+            _view.SetActiveEnemy(true);
         }
 
         public void TakeDamage(int amount, Vector3 direction)
@@ -55,6 +56,7 @@ namespace HeroSurvivor.Gameplay.Health
         {
             _view.PlayHitEffect(direction);
             _view.PlayDeath(direction);
+            _view.SetActiveEnemy(false);
 
             _signalBus.Fire(new EnemyDiedSignal
             {

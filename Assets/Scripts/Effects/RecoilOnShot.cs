@@ -2,7 +2,7 @@ using UnityEngine;
 using HeroSurvivor.Gameplay.Combat;
 using PrimeTween;
 
-namespace HeroSurvivor.GameFeel
+namespace HeroSurvivor.Effects
 {
     public class RecoilOnShot : MonoBehaviour
     {

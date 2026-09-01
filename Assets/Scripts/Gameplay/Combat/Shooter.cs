@@ -1,5 +1,6 @@
 using HeroSurvivor.Gameplay.Intent;
 using HeroSurvivor.Gameplay.Health;
+using HeroSurvivor.Gameplay.Animation;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
@@ -18,6 +19,7 @@ namespace HeroSurvivor.Gameplay.Combat
         [SerializeField] private Transform _muzzle;
         [SerializeField] private float _fireRate = 1f;
         [SerializeField] private CharacterConfig _characterConfig;
+        [SerializeField] private HeroAnimatorView _animatorView;
 
         public event Action Shot;
 
@@ -78,6 +80,7 @@ namespace HeroSurvivor.Gameplay.Combat
 
             _cooldown = _fireRate;
 
+            _animatorView?.PlayShoot();
             Shot?.Invoke();
             _signalBus?.Fire<WeaponFiredSignal>();
         }

@@ -1,3 +1,4 @@
+using HeroSurvivor.Gameplay.Animation;
 using UnityEngine;
 
 namespace HeroSurvivor.Gameplay.Movement
@@ -6,6 +7,16 @@ namespace HeroSurvivor.Gameplay.Movement
     {
         [SerializeField] private Rigidbody _rigidBody;
         [SerializeField] private MovementModifier[] _modifiers;
+
+        private IMovementAnimator _movementAnimator;
+
+        private void Awake()
+        {
+            if (_rigidBody == null)
+                _rigidBody = GetComponent<Rigidbody>();
+
+            _movementAnimator = GetComponentInChildren<IMovementAnimator>();
+        }
 
         private void FixedUpdate()
         {
@@ -19,6 +30,8 @@ namespace HeroSurvivor.Gameplay.Movement
             }
 
             _rigidBody.linearVelocity = velocity;
+
+            _movementAnimator?.SetMovementSpeed(velocity.magnitude);
         }
     }
 }
